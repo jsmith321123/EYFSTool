@@ -1,12 +1,12 @@
-#ifndef EYFSTOOL_LOGINSCREEN_H
-#define EYFSTOOL_LOGINSCREEN_H
+#ifndef LOGINSCREEN_H
+#define LOGINSCREEN_H
 
 #include <iostream>
+#include <QMainWindow>
 
 using namespace std;
 
 class LoginScreen : public QMainWindow {
-
 
 public:
 	LoginScreen();
@@ -17,4 +17,4 @@ private:
 
 };
 
-#endif //EYFSTOOL_LOGINSCREEN_H
+#endif //LOGINSCREEN_H
