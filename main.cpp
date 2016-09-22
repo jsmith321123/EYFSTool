@@ -4,8 +4,15 @@
 //headers
 #include "qt_classes/LoginScreen.h"
 
+//qt
+#include <QtCore>
+#include <QApplication>
+
 using namespace std;
 
 int main(int argc, char **argv) {
-	cout << "test" << endl;
+	QApplication app (argc, argv);
+	LoginScreen login;
+	login.show();
+	app.exec();
 }
