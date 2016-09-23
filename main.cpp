@@ -3,6 +3,7 @@
 
 //headers
 #include "qt_classes/LoginScreen.h"
+#include "qt_classes/MainWindow.h"
 
 //qt
 #include <QtCore>

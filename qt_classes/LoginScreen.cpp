@@ -6,5 +6,18 @@
 using namespace std;
 
 LoginScreen::LoginScreen() {
-	cout << "test" << endl;
+	userLineEdi00t.setPlaceholderText("Username");
+	passLineEdit.setPlaceholderText("Password");
+
+	passLineEdit.setEchoMode(QLineEdit::Password);
+
+	loginButton.setText("Login");
+
+	layout.addWidget(&userLineEdit);
+	layout.addWidget(&passLineEdit);
+	layout.addWidget(&loginButton);
+
+	centralWidget.setLayout(&layout);
+
+	setCentralWidget(&centralWidget);
 }

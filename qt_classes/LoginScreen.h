@@ -5,8 +5,10 @@
 
 //qt
 #include <QMainWindow>
-#include <QTextEdit>
+#include <QLineEdit>
 #include <QPushButton>
+#include <QWidget>
+#include <QVBoxLayout>
 
 using namespace std;
 
@@ -24,8 +26,11 @@ private:
 
 	string hash();
 
-	QTextEdit userTextEdit;
-	QTextEdit passTextEdit;
+	QWidget centralWidget;
+	QVBoxLayout layout;
+
+	QLineEdit userLineEdit;
+	QLineEdit passLineEdit;
 
 	QPushButton loginButton;
 
