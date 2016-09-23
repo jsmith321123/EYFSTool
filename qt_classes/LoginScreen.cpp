@@ -6,7 +6,7 @@
 using namespace std;
 
 LoginScreen::LoginScreen() {
-	userLineEdi00t.setPlaceholderText("Username");
+	userLineEdit.setPlaceholderText("Username");
 	passLineEdit.setPlaceholderText("Password");
 
 	passLineEdit.setEchoMode(QLineEdit::Password);

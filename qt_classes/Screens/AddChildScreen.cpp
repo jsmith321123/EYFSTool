@@ -3,6 +3,9 @@
 #include "AddChildScreen.h"
 
 AddChildScreen::AddChildScreen() {
+	//settings for the date edit
+	dobDateEdit.setCalendarPopup(true);
+
 	//setting the text for the labels
 	forenameLabel.setText("Forename:");
 	surnameLabel.setText("Surname:");
@@ -24,7 +27,7 @@ AddChildScreen::AddChildScreen() {
 	//adding line edits to the layout
 	forenameLayout.addWidget(&forenameLineEdit);
 	surnameLayout.addWidget(&surnameLineEdit);
-	dobLayout.addWidget(&dobLineEdit);
+	dobLayout.addWidget(&dobDateEdit);
 	emailLayout.addWidget(&emailLineEdit);
 	homeNoLayout.addWidget(&homeNoLineEdit);
 	p1MobLayout.addWidget(&p1MobLineEdit);
@@ -39,5 +42,5 @@ AddChildScreen::AddChildScreen() {
 	layout.addLayout(&p1MobLayout);
 	layout.addLayout(&p2MobLayout);
 
-	setLayout(layout);
+	setLayout(&layout);
 }

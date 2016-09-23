@@ -5,9 +5,12 @@
 
 //qt
 #include <QMainWindow>
+#include <QHBoxLayout>
+#include <QWidget>
 
 //headers
 #include "Screen.h"
+#include "NavigationBar.h"
 
 //screens
 #include "Screens/AddChildScreen.h"
@@ -25,8 +28,8 @@ public:
 	MainWindow();
 
 private:
-	Screen screens [1] = {
-		AddChildScreen()//,
+	Screen* screens [1] = {
+		new AddChildScreen()//,
 		//new CreateReportScreen(),
 		//new CreateReportContainerScreen(),
 		//new LoadReportScreen(),
@@ -34,7 +37,13 @@ private:
 		//new ViewChildScreen()
 	};
 
-	Screen currentScreen;
+	Screen *currentScreen;
+
+	NavigationBar navBar;
+
+	QHBoxLayout layout;
+
+	QWidget centralWidget;
 };
 
 

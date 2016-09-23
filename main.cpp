@@ -13,7 +13,9 @@ using namespace std;
 
 int main(int argc, char **argv) {
 	QApplication app (argc, argv);
-	LoginScreen login;
-	login.show();
+	//LoginScreen login;
+	//login.show();
+	MainWindow mw;
+	mw.show();
 	app.exec();
 }

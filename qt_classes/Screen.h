@@ -12,7 +12,9 @@ class Screen : public QWidget {
 
 Q_OBJECT
 
-protected:
+public:
+	Screen();
+
 	string name;
 	int id;
 };

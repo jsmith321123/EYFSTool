@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QDateEdit>
 
 class AddChildScreen : public Screen {
 	
@@ -21,13 +22,13 @@ public:
 private:
 	QLineEdit forenameLineEdit;
 	QLabel forenameLabel;
-	QHBoxLayout fornameLayout;
+	QHBoxLayout forenameLayout;
 
 	QLineEdit surnameLineEdit;
 	QLabel surnameLabel;
 	QHBoxLayout surnameLayout;
 
-	QLineEdit dobLineEdit;
+	QDateEdit dobDateEdit;
 	QLabel dobLabel;
 	QHBoxLayout dobLayout;
 
@@ -43,7 +44,7 @@ private:
 	QLabel p1MobLabel;
 	QHBoxLayout p1MobLayout;
 
-	QLineEdit p2MobTextEdit;
+	QLineEdit p2MobLineEdit;
 	QLabel p2MobLabel;
 	QHBoxLayout p2MobLayout;
 
