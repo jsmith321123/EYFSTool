@@ -8,14 +8,14 @@
 //qt
 #include <QtCore>
 #include <QApplication>
+#include <QSqlDatabase>
 
 using namespace std;
 
 int main(int argc, char **argv) {
 	QApplication app (argc, argv);
-	//LoginScreen login;
-	//login.show();
 	MainWindow mw;
-	mw.show();
+	LoginScreen login(&mw);
+	login.show();
 	app.exec();
 }

@@ -28,13 +28,13 @@ public:
 	MainWindow();
 
 private:
-	Screen* screens [1] = {
-		new AddChildScreen()//,
+	Screen* screens [2] = {
+		new AddChildScreen(),
 		//new CreateReportScreen(),
 		//new CreateReportContainerScreen(),
 		//new LoadReportScreen(),
 		//new NewAssessmentScreen(),
-		//new ViewChildScreen()
+		new ViewChildScreen()
 	};
 
 	Screen *currentScreen;

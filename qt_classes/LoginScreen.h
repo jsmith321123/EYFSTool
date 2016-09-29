@@ -9,6 +9,11 @@
 #include <QPushButton>
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QString>
+#include <QSqlDatabase>
+
+//headers
+#include "MainWindow.h"
 
 using namespace std;
 
@@ -17,14 +22,16 @@ class LoginScreen : public QMainWindow {
 Q_OBJECT
 
 public:
-	LoginScreen();
+	LoginScreen(MainWindow *mw);
+
+public slots:
+	bool login();
 
 private:
 
-	bool login(string u, string p);
 	void showMainWindow();
 
-	string hash();
+	QString hash(QString string);
 
 	QWidget centralWidget;
 	QVBoxLayout layout;
@@ -34,6 +41,11 @@ private:
 
 	QPushButton loginButton;
 
+	QLabel wrongPassLabel;
+
+	MainWindow *mw_;
+
+	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL3", "localhost");
 };
 
 #endif //LOGINSCREEN_H
