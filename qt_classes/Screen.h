@@ -17,6 +17,7 @@ public:
 
 	string name;
 	int id;
+	int al_;
 };
 
 #endif //SCREEN_H

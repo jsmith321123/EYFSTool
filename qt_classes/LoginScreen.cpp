@@ -9,9 +9,10 @@
 #include <QDebug>
 
 
+
 using namespace std;
 
-LoginScreen::LoginScreen(MainWindow *mw) {
+LoginScreen::LoginScreen(QSqlDatabase db) {
 	userLineEdit.setPlaceholderText("Username");
 	passLineEdit.setPlaceholderText("Password");
 
@@ -25,22 +26,12 @@ LoginScreen::LoginScreen(MainWindow *mw) {
 	layout.addWidget(&wrongPassLabel);
 
 	centralWidget.setLayout(&layout);
-
 	setCentralWidget(&centralWidget);
 
-	mw_ = mw;
+	db_ = db;
 
-	//setup database connection for checking credentials
-	db.setHostName("localhost");
-	db.setDatabaseName("EYFSTool");
-	db.setUserName("root");
-	db.setPassword("1011josh");
-
-	bool ok = db.open();
-
-	cout << ok << endl;
-	
     connect(&loginButton, SIGNAL(clicked()), this, SLOT (login()));
+    connect(&passLineEdit, SIGNAL(returnPressed()), this, SLOT (login()));
 }
 
 bool LoginScreen::login() {
@@ -48,32 +39,52 @@ bool LoginScreen::login() {
 	QString password = passLineEdit.text();
 
 	//create and execute query
-	QSqlQuery query(db);
-    query.exec(QString("SELECT * FROM users"));
+	QSqlQuery query(db_);
+    query.exec(QString("SELECT * FROM users WHERE user_name='" + user + "'"));
 
     //loop through query and evaluate whether the user has entered
     //the correct credentials
     while (query.next()) {
         QString user_name = query.value(1).toString();
-        QString hashed_password = query.value(2).toString();
+        int hashed_password = query.value(2).toInt();
+        al = query.value(3).toInt();
+
+        cout << al << endl;
 
         if (user_name == user && hash(password) == hashed_password) {
+        	db_.close();
+
         	//close the login screen and open the main window
         	showMainWindow();
         } else {
         	//display incorrect credential message
         	wrongPassLabel.setText("Wrong username or password.");
+        	wrongPassLabel.setStyleSheet("QLabel {color : red}");
         }
     }
 
 	return true;
 }
 
-QString LoginScreen::hash(QString string) {
-	return string;
+int LoginScreen::hash(QString string) {
+	long int finalInt = 0;
+
+	int count = 1;
+	for (char c : string.toStdString()) {
+		finalInt += int(c) * count + 1;
+
+		count += 128;
+	}
+
+	finalInt = finalInt;
+
+	return finalInt;
 }
 
 void LoginScreen::showMainWindow() {
-	mw_->show();
+	MainWindow *main = new MainWindow(db_, al);
+
+	main->show();
+
 	hide();
 }

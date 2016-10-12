@@ -11,13 +11,18 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QDateEdit>
+#include <QSqlDatabase>
+#include <QPushButton>
 
 class AddChildScreen : public Screen {
 	
 	Q_OBJECT
 
 public:
-	AddChildScreen();
+	AddChildScreen(QSqlDatabase db);
+
+public slots:
+	void addChild();
 
 private:
 	QLineEdit forenameLineEdit;
@@ -48,7 +53,11 @@ private:
 	QLabel p2MobLabel;
 	QHBoxLayout p2MobLayout;
 
+	QPushButton submit;
+
 	QVBoxLayout layout;
+
+	QSqlDatabase db_;
 };
 
 #endif //ADDCHILDSCREEN_H

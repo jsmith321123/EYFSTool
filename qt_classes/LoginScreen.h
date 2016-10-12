@@ -15,6 +15,7 @@
 //headers
 #include "MainWindow.h"
 
+
 using namespace std;
 
 class LoginScreen : public QMainWindow {
@@ -22,16 +23,17 @@ class LoginScreen : public QMainWindow {
 Q_OBJECT
 
 public:
-	LoginScreen(MainWindow *mw);
+	LoginScreen(QSqlDatabase db);
 
 public slots:
 	bool login();
 
 private:
+	int al;
 
 	void showMainWindow();
 
-	QString hash(QString string);
+	int hash(QString string);
 
 	QWidget centralWidget;
 	QVBoxLayout layout;
@@ -45,7 +47,7 @@ private:
 
 	MainWindow *mw_;
 
-	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL3", "localhost");
+	QSqlDatabase db_;
 };
 
 #endif //LOGINSCREEN_H

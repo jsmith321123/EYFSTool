@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QHBoxLayout>
 #include <QWidget>
+#include <QStackedLayout>
 
 //headers
 #include "Screen.h"
@@ -19,31 +20,32 @@
 #include "Screens/LoadReportScreen.h"
 #include "Screens/NewAssessmentScreen.h"
 #include "Screens/ViewChildScreen.h"
+#include "Screens/CreateUserScreen.h"
 
 
 class MainWindow : public QMainWindow {
 	Q_OBJECT
 
 public:
-	MainWindow();
+	MainWindow(QSqlDatabase db, int al);
 
+	void changeScreen(int index);
+
+	int accessLevel = 2;
+
+	int currentIndex = 1;
 private:
-	Screen* screens [2] = {
-		new AddChildScreen(),
-		//new CreateReportScreen(),
-		//new CreateReportContainerScreen(),
-		//new LoadReportScreen(),
-		//new NewAssessmentScreen(),
-		new ViewChildScreen()
-	};
+	Screen* screens [4];
 
 	Screen *currentScreen;
 
-	NavigationBar navBar;
+	NavigationBar* navBar = new NavigationBar(this);
 
 	QHBoxLayout layout;
 
 	QWidget centralWidget;
+
+	QStackedLayout mainScreen;
 };
 
 

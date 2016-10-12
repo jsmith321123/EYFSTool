@@ -12,6 +12,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QSqlDatabase>
 
 using namespace std;
 
@@ -20,6 +21,7 @@ class NewAssessmentScreen : public Screen {
 Q_OBJECT
 
 public:
+	NewAssessmentScreen(QSqlDatabase db);
 
 private:
 	//child selection
@@ -38,6 +40,8 @@ private:
 	QTextEdit enabEnvTextEdit;
 
 	QVBoxLayout assessLayout;
+
+	QSqlDatabase db_;
 };
 
 #endif //NEWASSESSMENTSCREEN_H
