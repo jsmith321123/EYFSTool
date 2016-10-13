@@ -47,6 +47,8 @@ AddChildScreen::AddChildScreen(QSqlDatabase db) {
 
 	layout.addWidget(&submit);
 
+	layout.setAlignment(Qt::AlignTop);
+
 	setLayout(&layout);
 
 	submit.setText("Submit");
