@@ -23,7 +23,7 @@ class LoginScreen : public QMainWindow {
 Q_OBJECT
 
 public:
-	LoginScreen(QSqlDatabase db);
+	LoginScreen();
 
 public slots:
 	bool login();
@@ -46,8 +46,6 @@ private:
 	QLabel wrongPassLabel;
 
 	MainWindow *mw_;
-
-	QSqlDatabase db_;
 };
 
 #endif //LOGINSCREEN_H

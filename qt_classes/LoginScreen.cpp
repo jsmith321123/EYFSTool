@@ -12,7 +12,7 @@
 
 using namespace std;
 
-LoginScreen::LoginScreen(QSqlDatabase db) {
+LoginScreen::LoginScreen() {
 	userLineEdit.setPlaceholderText("Username");
 	passLineEdit.setPlaceholderText("Password");
 
@@ -27,8 +27,6 @@ LoginScreen::LoginScreen(QSqlDatabase db) {
 
 	centralWidget.setLayout(&layout);
 	setCentralWidget(&centralWidget);
-
-	db_ = db;
 
     connect(&loginButton, SIGNAL(clicked()), this, SLOT (login()));
     connect(&passLineEdit, SIGNAL(returnPressed()), this, SLOT (login()));
