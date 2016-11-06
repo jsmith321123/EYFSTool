@@ -1,7 +1,9 @@
 #include <iostream>
+#include <fstream>
 
 #include "LoginScreen.h"
 #include "MainWindow.h"
+#include "./../libraries/json.hpp"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -11,6 +13,7 @@
 
 
 using namespace std;
+using json = nlohmann::json;
 
 LoginScreen::LoginScreen() {
 	userLineEdit.setPlaceholderText("Username");
@@ -35,37 +38,26 @@ LoginScreen::LoginScreen() {
 bool LoginScreen::login() {
 	QString user = userLineEdit.text();
 	QString password = passLineEdit.text();
+	
+	ifstream user_file("./data/users.json", ifstream::binary);
+	json user_json(user_file);
+	
+	cout << hash(password) << endl;
 
-	//create and execute query
-	QSqlQuery query(db_);
-    query.exec(QString("SELECT * FROM users WHERE user_name='" + user + "'"));
-
-    //loop through query and evaluate whether the user has entered
-    //the correct credentials
-    while (query.next()) {
-        QString user_name = query.value(1).toString();
-        int hashed_password = query.value(2).toInt();
-        al = query.value(3).toInt();
-
-        cout << al << endl;
-
-        if (user_name == user && hash(password) == hashed_password) {
-        	db_.close();
-
-        	//close the login screen and open the main window
-        	showMainWindow();
-        } else {
-        	//display incorrect credential message
-        	wrongPassLabel.setText("Wrong username or password.");
-        	wrongPassLabel.setStyleSheet("QLabel {color : red}");
-        }
-    }
-
+	for (json curr_user : user_json) {
+	 	if (curr_user["user"] == json(user.toStdString())
+		    && curr_user["hashed_password"] == json(hash(password))
+		) {
+			showMainWindow();
+			cout << "It works!" << endl;
+		}
+	}	
+	
 	return true;
 }
 
 int LoginScreen::hash(QString string) {
-	long int finalInt = 0;
+	int finalInt = 0;
 
 	int count = 1;
 	for (char c : string.toStdString()) {
@@ -80,7 +72,7 @@ int LoginScreen::hash(QString string) {
 }
 
 void LoginScreen::showMainWindow() {
-	MainWindow *main = new MainWindow(db_, al);
+	MainWindow *main = new MainWindow(al);
 
 	main->show();
 

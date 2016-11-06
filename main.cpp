@@ -38,9 +38,8 @@ int main(int argc, char **argv) {
 
 	//cout << ok << endl;
 
-	LoginScreen login(db);
+	LoginScreen login;
 
-	NewAssessmentScreen* nas = new NewAssessmentScreen(db);
 	login.show();
 	app.exec();
 

@@ -6,10 +6,10 @@
 
 
 
-MainWindow::MainWindow(QSqlDatabase db, int al) {
-	screens[0] = new AddChildScreen(db);
+MainWindow::MainWindow(int al) {
+	screens[0] = new AddChildScreen();
 	screens[1] = new ViewChildScreen();
-	screens[2] = new CreateUserScreen(db, al);
+	screens[2] = new CreateUserScreen(al);
 	screens[3] = new CreateReportContainerScreen();
 
 	for (Screen* s : screens) {

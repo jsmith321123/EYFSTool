@@ -27,7 +27,7 @@ class MainWindow : public QMainWindow {
 	Q_OBJECT
 
 public:
-	MainWindow(QSqlDatabase db, int al);
+	MainWindow(int al);
 
 	void changeScreen(int index);
 

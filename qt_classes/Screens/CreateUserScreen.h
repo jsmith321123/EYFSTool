@@ -22,7 +22,7 @@ class CreateUserScreen : public Screen {
 Q_OBJECT
 
 public:
-	CreateUserScreen(QSqlDatabase db, int al);
+	CreateUserScreen(int al);
 
 	//user's permission level
 	int al_ = 3;

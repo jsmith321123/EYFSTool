@@ -5,7 +5,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
-AddChildScreen::AddChildScreen(QSqlDatabase db) {
+AddChildScreen::AddChildScreen() {
 	//settings for the date edit
 	dobDateEdit.setCalendarPopup(true);
 
@@ -52,9 +52,6 @@ AddChildScreen::AddChildScreen(QSqlDatabase db) {
 	setLayout(&layout);
 
 	submit.setText("Submit");
-
-	//import database
-	db_ = db;
 
 	//connections
 	connect(&submit, SIGNAL(clicked()), this, SLOT(addChild()));

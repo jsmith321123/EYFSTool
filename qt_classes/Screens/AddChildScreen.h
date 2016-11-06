@@ -19,7 +19,7 @@ class AddChildScreen : public Screen {
 	Q_OBJECT
 
 public:
-	AddChildScreen(QSqlDatabase db);
+	AddChildScreen();
 
 public slots:
 	void addChild();

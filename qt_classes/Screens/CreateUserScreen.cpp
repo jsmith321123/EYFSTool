@@ -9,7 +9,7 @@
 
 #include "./MainWindow.h"
 
-CreateUserScreen::CreateUserScreen(QSqlDatabase db, int al) {
+CreateUserScreen::CreateUserScreen(int al) {
 	//user_name selection
 	userLabel.setText("Username");
 	userLayout.addWidget(&userLabel);
@@ -43,8 +43,6 @@ CreateUserScreen::CreateUserScreen(QSqlDatabase db, int al) {
 	layout.addLayout(&accessLayout);
 	layout.addWidget(&submitButton);
 	layout.addWidget(&feedbackLabel);
-
-	db_ = db;
 
 	al_ = al;
 
