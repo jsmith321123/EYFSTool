@@ -10,7 +10,10 @@
 #include <QString>
 #include <QDebug>
 
+#include <typeinfo>
 
+//testing graph REMOVE THIS
+#include "Screens/GraphGraphicsScene.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -30,9 +33,17 @@ LoginScreen::LoginScreen() {
 
 	centralWidget.setLayout(&layout);
 	setCentralWidget(&centralWidget);
+	
+	//TESTING GRAPHS REMOVE THIS
+	//GraphGraphicsScene *ggs = new GraphGraphicsScene();
+	
+	//layout.addWidget(&ggs->view);
 
-    connect(&loginButton, SIGNAL(clicked()), this, SLOT (login()));
-    connect(&passLineEdit, SIGNAL(returnPressed()), this, SLOT (login()));
+	centralWidget.setLayout(&layout);
+	setCentralWidget(&centralWidget);
+
+	connect(&loginButton, SIGNAL(clicked()), this, SLOT (login()));
+    	connect(&passLineEdit, SIGNAL(returnPressed()), this, SLOT (login()));
 }
 
 bool LoginScreen::login() {
@@ -48,8 +59,8 @@ bool LoginScreen::login() {
 	 	if (curr_user["user"] == json(user.toStdString())
 		    && curr_user["hashed_password"] == json(hash(password))
 		) {
+			al = curr_user["access_level"];
 			showMainWindow();
-			cout << "It works!" << endl;
 		}
 	}	
 	
@@ -65,8 +76,6 @@ int LoginScreen::hash(QString string) {
 
 		count += 128;
 	}
-
-	finalInt = finalInt;
 
 	return finalInt;
 }

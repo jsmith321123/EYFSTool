@@ -1,7 +1,1 @@
-[
-    {
-        "user": "josh",
-        "hashed_password": 260068,
-        "access_level": 0
-    }
-]
+[{"access_level":0,"hashed_password":260068,"user":"josh"},{"access_level":1,"hashed_password":87364,"user":"test"},{"access_level":2,"hashed_password":87364,"user":"test1"},{"access_level":"1","hashed_password":"39630","user":"test_user"}]

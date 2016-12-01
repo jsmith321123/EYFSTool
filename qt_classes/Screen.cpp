@@ -3,3 +3,7 @@
 Screen::Screen() {
 
 }
+
+void Screen::updateList() {
+
+}

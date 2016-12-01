@@ -14,6 +14,7 @@ Q_OBJECT
 
 public:
 	Screen();
+	void updateList();
 
 	string name;
 	int id;

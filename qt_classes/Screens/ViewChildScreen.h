@@ -10,11 +10,22 @@
 #include <QComboBox>
 #include <QPushButton>
 
+#include "./../../libraries/json.hpp"
+
+using json=nlohmann::json;
+
 class ViewChildScreen : public Screen {
 	Q_OBJECT
 
 public:
 	ViewChildScreen();
+
+	void displayChild(int id);
+	void updateList();
+	
+public slots:
+	void displayChoice();
+	void back();
 
 private:
 	//selection of individual child
@@ -28,10 +39,15 @@ private:
 	QTextEdit dataTextEdit;
 	QVBoxLayout layout2;
 
+	QPushButton backButton;
+
 	QWidget displayWidget;
 
 	//allowing the switch between selecting and displaying info
 	QStackedLayout stackedLayout;
+
+
+	json JSON;
 };
 
 #endif //VIEWCHILDSCREEN_H

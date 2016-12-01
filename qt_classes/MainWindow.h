@@ -34,9 +34,9 @@ public:
 	int accessLevel = 2;
 
 	int currentIndex = 1;
-private:
-	Screen* screens [4];
 
+	Screen* screens [4];
+private:
 	Screen *currentScreen;
 
 	NavigationBar* navBar = new NavigationBar(this);

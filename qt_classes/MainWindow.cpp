@@ -38,6 +38,7 @@ void NavigationBar::setAddChild() {
 
 void NavigationBar::setViewChild() {
 	mw_->changeScreen(1);
+	mw_->screens[1]->updateList();
 }
 
 void NavigationBar::setCreateUser() {

@@ -1,6 +1,10 @@
 #include "CreateUserScreen.h"
 
 #include "../../Hash.h"
+#include "./../../libraries/json.hpp"
+
+#include <iostream>
+#include <fstream>
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -8,6 +12,9 @@
 #include <QStringList>
 
 #include "./MainWindow.h"
+
+using namespace std;
+using json = nlohmann::json;
 
 CreateUserScreen::CreateUserScreen(int al) {
 	//user_name selection
@@ -17,7 +24,7 @@ CreateUserScreen::CreateUserScreen(int al) {
 
 	//password selection
 	pass1Label.setText("Password");
-	pass2Label.setText("Confrim password");
+	pass2Label.setText("Confirm password");
 	pass1Layout.addWidget(&pass1Label);
 	pass1Layout.addWidget(&pass1LineEdit);
 	pass2Layout.addWidget(&pass2Label);
@@ -103,17 +110,27 @@ void CreateUserScreen::addUser() {
 	cout << "al: " << al_ << endl;
 
 	//if the password and user name are valid
-	//adds the new user to the table
+	//adds the new user to the table as long
+	//as they dont already exist
 	if (newUser && password != 0 && user != "" && al_ == 0) {
-		QSqlQuery query(db_);
-	    query.prepare("INSERT INTO users (user_name, hashed_password, access_level) "
-	                  "VALUES (:user_name, :hashed_password, :access_level)");
-	    query.bindValue(":user_name", user);
-	    query.bindValue(":hashed_password", password);
-	    query.bindValue(":access_level", accessComboBox.currentText().toInt());
-	    query.exec();
+		ifstream user_file("./data/users.json", ifstream::binary);
+		json user_json(user_file);
+		
+		string access = accessComboBox.currentText().toStdString();
 
-	    succeded = true;
+		json new_user;
+
+		new_user["user"] = user.toStdString();
+		new_user["hashed_password"] = to_string(password);
+		new_user["access_level"] = access;
+		
+		user_json.push_back(new_user);
+
+		ofstream output("./data/users.json");
+
+		output << user_json.dump();
+
+		succeded = true;
 	}
 
 	//displays the correct messages
@@ -135,8 +152,14 @@ void CreateUserScreen::addUser() {
 }
 
 bool CreateUserScreen::userExists(QString user_name) {
-	QSqlQuery query(db_);
-    query.exec(QString("SELECT * FROM users WHERE user_name='" + user_name + "'"));
+	ifstream user_file("./data/users.json", ifstream::binary);
+	json user_json(user_file);
+	
+	for (user : user_json) {
+		if (user["user"] == json(user_name.toStdString())) {
+			return true;
+		}
+	}
 
-    return query.next();
+	return false;
 }

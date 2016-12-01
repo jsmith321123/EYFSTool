@@ -5,6 +5,13 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
+#include <fstream>
+
+#include "./../../libraries/json.hpp"
+
+using namespace std;
+using json = nlohmann::json;
+
 AddChildScreen::AddChildScreen() {
 	//settings for the date edit
 	dobDateEdit.setCalendarPopup(true);
@@ -58,9 +65,6 @@ AddChildScreen::AddChildScreen() {
 }
 
 void AddChildScreen::addChild () {
-	//open database
-	db_.open();
-
 	//get the contents of the fields
 	QString forename = forenameLineEdit.text();
 	QString surname = surnameLineEdit.text();
@@ -70,16 +74,27 @@ void AddChildScreen::addChild () {
 	QString mobile_no1 = p1MobLineEdit.text();
 	QString mobile_no2 = p2MobLineEdit.text();
 
-	//crate the query, add the attributes and then execute
-	QSqlQuery query(db_);
-	query.prepare("INSERT INTO child_info (forename, surname, d_o_b, email, home_no, mobile_no1, mobile_no2) "
-	              "VALUES (:forename, :surname, :d_o_b, :email, :home_no, :mobile_no1, :mobile_no2)");
-	query.bindValue(":forename", forename);
-	query.bindValue(":surname", surname);
-	query.bindValue(":d_o_b", dob);
-	query.bindValue(":email", email);
-	query.bindValue(":home_no", home_no);
-	query.bindValue(":mobile_no1", mobile_no1);
-	query.bindValue(":mobile_no2", mobile_no2);
-	query.exec();
+	//open the json file and append the new child to the end of it
+	json new_child;
+	
+	new_child["forename"] = forename.toStdString();
+	new_child["surname"] = surname.toStdString();
+	new_child["dob"] = dob.toStdString();
+	new_child["email"] = email.toStdString();
+	new_child["home_no"] = home_no.toStdString();
+	new_child["mobile_no1"] = mobile_no1.toStdString();
+	new_child["mobile_no2"] = mobile_no2.toStdString();	
+
+	//get the existing json
+	ifstream file("./data/children.json");
+	json current = json(file);
+	
+	//set the id of the new child
+	new_child["id"] = current.size();
+
+	current.push_back(new_child);
+
+	//rewrite the file with the new json object	
+	ofstream output("./data/children.json");
+	output << current.dump();
 }
