@@ -26,18 +26,18 @@ LoginScreen::LoginScreen() {
 
 	loginButton.setText("Login");
 
-	layout.addWidget(&userLineEdit);
-	layout.addWidget(&passLineEdit);
-	layout.addWidget(&loginButton);
-	layout.addWidget(&wrongPassLabel);
+	//layout.addWidget(&userLineEdit);
+	//layout.addWidget(&passLineEdit);
+	//layout.addWidget(&loginButton);
+	//layout.addWidget(&wrongPassLabel);
 
-	centralWidget.setLayout(&layout);
-	setCentralWidget(&centralWidget);
+	//centralWidget.setLayout(&layout);
+	//setCentralWidget(&centralWidget);
 	
 	//TESTING GRAPHS REMOVE THIS
-	//GraphGraphicsScene *ggs = new GraphGraphicsScene();
+	GraphGraphicsScene *ggs = new GraphGraphicsScene();
 	
-	//layout.addWidget(&ggs->view);
+	layout.addWidget(&ggs->view);
 
 	centralWidget.setLayout(&layout);
 	setCentralWidget(&centralWidget);

@@ -22,49 +22,6 @@ GraphGraphicsScene::GraphGraphicsScene() {
 	
 	x_axis->setPen(axis_pen);
 	y_axis->setPen(axis_pen);
-
-	//creating two vectors with test data
-	vector<int> x;
-	x.push_back(1);
-	x.push_back(2);
-	x.push_back(3);
-	x.push_back(4);
-	x.push_back(5);
-	x.push_back(6);
-	x.push_back(7);
-	x.push_back(8);
-	x.push_back(9);
-
-	vector<int> y;
-	y.push_back(7);
-	y.push_back(4);
-	y.push_back(10);
-	y.push_back(1);
-	y.push_back(6);
-	y.push_back(7);
-	y.push_back(7);
-	y.push_back(8);
-	y.push_back(6);
-
-	//set the colour of the trendline
-	trendline_pen.setColor(Qt::blue);
-	
-	//generate the trendline with the test data
-	pair<pair<int, int>, pair<int, int>>line = rLine(x, y);
-
-	//adding the test trendline to the graph
-	QGraphicsLineItem *trendline = addLine(line.first.first, line.first.second,
-		line.second.first, line.second.second);
-	
-	trendline->setPen(trendline_pen);
-
-	//plot the data lines for the test graph
-	for (int i = 1; i < x.size(); i++) {
-		QGraphicsLineItem *newLine = addLine(x[i-1], y[i-1], x[i], y[i]);
-		newLine->setPen(line_pen);
-	}
-
-	
 }
 
 pair<pair<int, int>, pair<int, int>> GraphGraphicsScene::rLine(vector<int> x_vals, 
@@ -156,4 +113,25 @@ float GraphGraphicsScene::mean(vector<int> vals) {
 	}
 
 	return sum/vals.size();
+}
+
+
+void GraphGraphicsScene::drawLines(vector<int> x, vector<int> y) {
+	//set the colour of the trendline
+    trendline_pen.setColor(Qt::blue);
+
+    //generate the trendline with the test data
+    pair<pair<int, int>, pair<int, int>>line = rLine(x, y);
+
+    //adding the test trendline to the graph
+    QGraphicsLineItem *trendline = addLine(line.first.first, line.first.second,
+        							line.second.first, line.second.second);
+
+    trendline->setPen(trendline_pen);
+
+    //plot the data lines for the test graph
+    for (int i = 1; i < x.size(); i++)
+        QGraphicsLineItem *newLine = addLine(x[i-1], y[i-1], x[i], y[i]);
+        newLine->setPen(line_pen);
+    }	
 }
