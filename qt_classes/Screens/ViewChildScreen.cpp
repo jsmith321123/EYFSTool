@@ -49,7 +49,7 @@ void ViewChildScreen::displayChoice() {
 void ViewChildScreen::displayChild(int id) {
 	json curr_child;
 
-	for (child : JSON) {
+	for (json child : JSON) {
 		if (json(id) == child["id"]) {
 			curr_child = child;
 		}
@@ -58,15 +58,17 @@ void ViewChildScreen::displayChild(int id) {
 	//get all of the child's information
 	string name = "Name: " + curr_child["surname"].dump() + ", " 
 			+ curr_child["forename"].dump();
+	string knownAs = "Known as: " + curr_child["knownAs"].dump();
 	string dob = "Date of birth: " + curr_child["dob"].dump();
-	string email = "Email: " + curr_child["email"].dump();
-	string home_no = "Home number: " + curr_child["home_no"].dump();
-	string mobile_no1 = "Mobile number 1: " + curr_child["mobile_no1"].dump();
-	string mobile_no2 = "Mobile number 2: " + curr_child["mobile_no2"].dump();
+	string neg = "NEG: " + string(((curr_child["neg"].dump() == "1") ? ("Yes") : ("No")));
+	string f2yo = "F2YO: " + string(((curr_child["f2yo"].dump() == "1") ? ("Yes") : ("No")));
+	string eypp = "EYPP: " + string(((curr_child["eypp"].dump() == "1") ? ("Yes") : ("No")));
 
-	QString text = QString::fromStdString(name + "\n" + dob + "\n" + email 
-			+ "\n" + home_no + "\n"
-			+ mobile_no1 + "\n" + mobile_no2 + "\n");
+	QString text = QString::fromStdString(
+			name + "\n" + knownAs + "\n" +
+			dob + "\n" + neg + "\n" + 
+			f2yo + "\n" + eypp
+		);
 
 	dataTextEdit.setText(text);
 	stackedLayout.setCurrentIndex(1);
@@ -84,7 +86,7 @@ void ViewChildScreen::updateList() {
 
         JSON = child_json;
 
-	for (child : child_json) {
+	for (json child : child_json) {
                 string surname = child["surname"].dump();
                 surname = surname.substr(1, surname.length() -2);
 

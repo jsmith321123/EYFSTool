@@ -115,7 +115,6 @@ float GraphGraphicsScene::mean(vector<int> vals) {
 	return sum/vals.size();
 }
 
-
 void GraphGraphicsScene::drawLines(vector<int> x, vector<int> y) {
 	//set the colour of the trendline
     trendline_pen.setColor(Qt::blue);
@@ -130,7 +129,7 @@ void GraphGraphicsScene::drawLines(vector<int> x, vector<int> y) {
     trendline->setPen(trendline_pen);
 
     //plot the data lines for the test graph
-    for (int i = 1; i < x.size(); i++)
+    for (int i = 1; i < x.size(); i++) {
         QGraphicsLineItem *newLine = addLine(x[i-1], y[i-1], x[i], y[i]);
         newLine->setPen(line_pen);
     }	

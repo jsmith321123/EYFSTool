@@ -17,6 +17,10 @@ class CreateReportScreen : public Screen {
 public:
 	CreateReportScreen();
 
+	void setIndividual();
+	void setGroup();
+	void setLearningArea();
+
 private:
 	QComboBox select;
 	QLabel selectLabel;
@@ -35,6 +39,8 @@ private:
 	QPushButton submitButton;
 
 	QVBoxLayout layout;
+
+	QPushButton addGroupButton;
 };
 
 #endif

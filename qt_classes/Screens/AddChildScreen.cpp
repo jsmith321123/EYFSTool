@@ -20,37 +20,37 @@ AddChildScreen::AddChildScreen() {
 	forenameLabel.setText("Forename:");
 	surnameLabel.setText("Surname:");
 	dobLabel.setText("Date of birth:");
-	emailLabel.setText("Email:");
-	homeNoLabel.setText("Home number:");
-	p1MobLabel.setText("1st Parent's mobile number:");
-	p2MobLabel.setText("2nd Parent's mobile number:");
+	knownAsLabel.setText("Known as:");
+	negLabel.setText("NEG:");
+	f2yoLabel.setText("F2YO");
+	eyppLabel.setText("EYPP:");
 
 	//adding labels to the layout
 	forenameLayout.addWidget(&forenameLabel);
 	surnameLayout.addWidget(&surnameLabel);
 	dobLayout.addWidget(&dobLabel);
-	emailLayout.addWidget(&emailLabel);
-	homeNoLayout.addWidget(&homeNoLabel);
-	p1MobLayout.addWidget(&p1MobLabel);
-	p2MobLayout.addWidget(&p2MobLabel);
+	knownAsLayout.addWidget(&knownAsLabel);
+	negLayout.addWidget(&negLabel);
+	f2yoLayout.addWidget(&f2yoLabel);
+	eyppLayout.addWidget(&eyppLabel);
 
 	//adding line edits to the layout
 	forenameLayout.addWidget(&forenameLineEdit);
 	surnameLayout.addWidget(&surnameLineEdit);
 	dobLayout.addWidget(&dobDateEdit);
-	emailLayout.addWidget(&emailLineEdit);
-	homeNoLayout.addWidget(&homeNoLineEdit);
-	p1MobLayout.addWidget(&p1MobLineEdit);
-	p2MobLayout.addWidget(&p2MobLineEdit);
+	knownAsLayout.addWidget(&knownAsLineEdit);
+	negLayout.addWidget(&negCheckBox);
+	f2yoLayout.addWidget(&f2yoCheckBox);
+	eyppLayout.addWidget(&eyppCheckBox);
 
 	//adding the layouts to the widgets layout
 	layout.addLayout(&forenameLayout);
 	layout.addLayout(&surnameLayout);
+	layout.addLayout(&knownAsLayout);
 	layout.addLayout(&dobLayout);
-	layout.addLayout(&emailLayout);
-	layout.addLayout(&homeNoLayout);
-	layout.addLayout(&p1MobLayout);
-	layout.addLayout(&p2MobLayout);
+	layout.addLayout(&negLayout);
+	layout.addLayout(&f2yoLayout);
+	layout.addLayout(&eyppLayout);
 
 	layout.addWidget(&submit);
 
@@ -69,10 +69,10 @@ void AddChildScreen::addChild () {
 	QString forename = forenameLineEdit.text();
 	QString surname = surnameLineEdit.text();
 	QString dob = dobDateEdit.date().toString();
-	QString email = emailLineEdit.text();
-	QString home_no = homeNoLineEdit.text();
-	QString mobile_no1 = p1MobLineEdit.text();
-	QString mobile_no2 = p2MobLineEdit.text();
+	QString knownAs = knownAsLineEdit.text();
+	int neg = negCheckBox.isChecked();
+	int f2yo = f2yoCheckBox.isChecked();
+	int eypp = eyppCheckBox.isChecked();
 
 	//open the json file and append the new child to the end of it
 	json new_child;
@@ -80,10 +80,10 @@ void AddChildScreen::addChild () {
 	new_child["forename"] = forename.toStdString();
 	new_child["surname"] = surname.toStdString();
 	new_child["dob"] = dob.toStdString();
-	new_child["email"] = email.toStdString();
-	new_child["home_no"] = home_no.toStdString();
-	new_child["mobile_no1"] = mobile_no1.toStdString();
-	new_child["mobile_no2"] = mobile_no2.toStdString();	
+	new_child["knownAs"] = knownAs.toStdString();
+	new_child["neg"] = neg;
+	new_child["f2yo"] = f2yo;
+	new_child["eypp"] = eypp;
 
 	//get the existing json
 	ifstream file("./data/children.json");

@@ -53,9 +53,9 @@ CreateUserScreen::CreateUserScreen(int al) {
 
 	al_ = al;
 
-	//adding values to combobox
+ 	//adding values to combobox
 	QStringList levels;
-	levels << "" << "0" << "1" << "2";
+	levels << "2" << "1" << "0";
 	accessComboBox.insertItems(0, levels);
 
 
@@ -155,7 +155,7 @@ bool CreateUserScreen::userExists(QString user_name) {
 	ifstream user_file("./data/users.json", ifstream::binary);
 	json user_json(user_file);
 	
-	for (user : user_json) {
+	for (json user : user_json) {
 		if (user["user"] == json(user_name.toStdString())) {
 			return true;
 		}

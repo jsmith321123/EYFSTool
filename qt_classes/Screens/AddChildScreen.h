@@ -13,6 +13,7 @@
 #include <QDateEdit>
 #include <QSqlDatabase>
 #include <QPushButton>
+#include <QCheckBox>
 
 class AddChildScreen : public Screen {
 	
@@ -33,25 +34,25 @@ private:
 	QLabel surnameLabel;
 	QHBoxLayout surnameLayout;
 
+	QLineEdit knownAsLineEdit;
+	QLabel knownAsLabel;
+	QHBoxLayout knownAsLayout;
+
 	QDateEdit dobDateEdit;
 	QLabel dobLabel;
 	QHBoxLayout dobLayout;
 
-	QLineEdit emailLineEdit;
-	QLabel emailLabel;
-	QHBoxLayout emailLayout;
+	QCheckBox negCheckBox;
+	QLabel negLabel;
+	QHBoxLayout negLayout;
 
-	QLineEdit homeNoLineEdit;
-	QLabel homeNoLabel;
-	QHBoxLayout homeNoLayout;
+	QCheckBox f2yoCheckBox;
+	QLabel f2yoLabel;
+	QHBoxLayout f2yoLayout;
 
-	QLineEdit p1MobLineEdit;
-	QLabel p1MobLabel;
-	QHBoxLayout p1MobLayout;
-
-	QLineEdit p2MobLineEdit;
-	QLabel p2MobLabel;
-	QHBoxLayout p2MobLayout;
+	QCheckBox eyppCheckBox;
+	QLabel eyppLabel;
+	QHBoxLayout eyppLayout;
 
 	QPushButton submit;
 
