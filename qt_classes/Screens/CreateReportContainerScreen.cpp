@@ -4,7 +4,7 @@
 
 CreateReportContainerScreen::CreateReportContainerScreen() {
 	for (CreateReportScreen* s : screens) {
-		tabs.addTab(s, "1");
+		tabs.addTab(s, QString::fromStdString(s->type_));
 	}
 
 	layout.addWidget(&tabs);

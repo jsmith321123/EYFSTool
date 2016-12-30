@@ -23,4 +23,5 @@ NavigationBar::NavigationBar(MainWindow* mw) {
 	connect(viewChildButton, SIGNAL(clicked()), this, SLOT(setViewChild()));
 	connect(createUserButton, SIGNAL(clicked()), this, SLOT(setCreateUser()));
 	connect(createReportButton, SIGNAL(clicked()), this, SLOT(setCreateReport()));
+	connect(newAssessButton, SIGNAL(clicked()), this, SLOT(setNewAssessment()));
 }

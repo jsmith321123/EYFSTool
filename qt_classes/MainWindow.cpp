@@ -11,6 +11,7 @@ MainWindow::MainWindow(int al) {
 	screens[1] = new ViewChildScreen();
 	screens[2] = new CreateUserScreen(al);
 	screens[3] = new CreateReportContainerScreen();
+	screens[4] = new NewAssessmentScreen();
 
 	for (Screen* s : screens) {
 		mainScreen.addWidget(s);
@@ -47,4 +48,8 @@ void NavigationBar::setCreateUser() {
 
 void NavigationBar::setCreateReport() {
 	mw_->changeScreen(3);
+}
+
+void NavigationBar::setNewAssessment() {
+	mw_->changeScreen(4);
 }

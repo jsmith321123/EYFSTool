@@ -22,6 +22,7 @@ public slots:
 	void setViewChild();
 	void setCreateReport();
 	void setCreateUser();
+	void setNewAssessment();
 
 private:
 	void setScreen(int index);

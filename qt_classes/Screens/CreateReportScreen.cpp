@@ -1,7 +1,17 @@
 #include "CreateReportScreen.h"
 
-CreateReportScreen::CreateReportScreen() {
-	setGroup();
+CreateReportScreen::CreateReportScreen(string type) {
+	type_ = type;
+
+	if (type_ == "Individual") {
+		setIndividual();
+	} else if (type_ == "Group") {
+		setGroup();
+	} else if (type_ == "Learning Area") {
+		setLearningArea();
+	}
+
+	layout.setAlignment(Qt::AlignTop);
 }
 
 
@@ -56,4 +66,27 @@ void CreateReportScreen::setGroup() {
 	layout.addWidget(&submitButton);
 
 	setLayout(&layout);
+}
+
+void CreateReportScreen::setLearningArea() {
+	submitButton.setText("submit");
+
+	startLabel.setText("Start date");
+	endLabel.setText("End date");
+
+	startLayout.addWidget(&startLabel);
+	startLayout.addWidget(&startDateEdit);
+
+	endLayout.addWidget(&endLabel);
+	endLayout.addWidget(&endDateEdit);
+
+	layout.addLayout(&startLayout);
+	layout.addLayout(&endLayout);
+	layout.addWidget(&submitButton);
+
+	setLayout(&layout);
+}
+
+void CreateReportScreen::createReport() {
+	
 }

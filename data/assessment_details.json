@@ -1,0 +1,486 @@
+[
+	{
+		"area": "Personal, Social and Emotional Development",
+		"subareas": [
+			{
+				"title": "Making relationships",
+				"age-ranges": [
+					{
+						"text": [
+							"Enjoys the company of others and seeks contact with others from birth.",
+							"Gazes at faces and copies facial movements. e.g. sticking outtongue, opening mouth and widening eyes. ",
+							"Responds when talked to, for example, moves arms and legs, changes facial expression, moves body and makes mouth movements.",
+							"Recognises and is most responsive to main carer's voice: face brightens, activity increases when familiar carer appears.",
+							"Responds to what carer is paying attention to, e.g. following",
+							"Likes cuddles and being held: calms, snuggles in, smiles, gazes at carer's face or strokes carer's skin."
+						]
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Self-confidence and self-awareness",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Managing feelings and behaviour",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			}
+		]
+	},
+	{
+		"area": "Physical Development",
+		"subareas": [
+			{
+				"title": "Moving and handling",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Health and self-care",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			}
+		]
+	},
+	{
+		"area": "Communication and Language",
+		"subareas": [
+			{
+				"title": "Listening and attention",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Understanding",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Speaking",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			}
+		]
+	},
+	{
+		"area": "Literacy",
+		"subareas": [
+			{
+				"title": "Reading",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Writing",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			}
+		]
+	},
+	{
+		"area": "Mathematics",
+		"subareas": [
+			{
+				"title": "Numbers",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Shape, space and measure",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			}
+		]
+	},
+	{
+		"area": "Understanding the World",
+		"subareas": [
+			{
+				"title": "People and communities",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "The world",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Technology",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			}
+		]
+	},
+	{
+		"area": "Expressive Arts and Design",
+		"subareas": [
+			{
+				"title": "Exploring and using media and materials",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			},
+			{
+				"title": "Being imaginative",
+				"age-ranges": [
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					},
+					{
+						"text": ""
+					}
+				]
+			}
+		]
+	}
+]

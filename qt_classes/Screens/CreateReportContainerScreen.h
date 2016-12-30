@@ -14,9 +14,9 @@ public slots:
 
 private:
 	CreateReportScreen* screens[3] = {
-		new CreateReportScreen(),
-		new CreateReportScreen(),
-		new CreateReportScreen()
+		new CreateReportScreen("Individual"),
+		new CreateReportScreen("Group"),
+		new CreateReportScreen("Learning Area")
 	};
 
 	QTabWidget tabs;

@@ -15,11 +15,15 @@
 
 class CreateReportScreen : public Screen {
 public:
-	CreateReportScreen();
+	CreateReportScreen(string type);
 
 	void setIndividual();
 	void setGroup();
 	void setLearningArea();
+	
+	void createReport();
+
+	string type_;
 
 private:
 	QComboBox select;
@@ -41,6 +45,9 @@ private:
 	QVBoxLayout layout;
 
 	QPushButton addGroupButton;
+
+
+
 };
 
 #endif
