@@ -82,9 +82,9 @@ void ViewChildScreen::updateList() {
 	QStringList items;
 
 	ifstream child_file("./data/children.json", ifstream::binary);
-        json child_json(child_file);
+    json child_json(child_file);
 
-        JSON = child_json;
+    JSON = child_json;
 
 	for (json child : child_json) {
                 string surname = child["surname"].dump();

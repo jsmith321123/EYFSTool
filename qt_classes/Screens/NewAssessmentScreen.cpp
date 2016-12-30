@@ -6,6 +6,8 @@
 
 #include <fstream>
 
+#include <time.h>
+
 #include "./../../libraries/json.hpp"
 
 using namespace std;
@@ -30,6 +32,11 @@ NewAssessmentScreen::NewAssessmentScreen () {
     connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextAgeRange()));
     connect(&backButton, SIGNAL(clicked()), this, SLOT(lastAgeRange()));
     connect(&selectButton, SIGNAL(clicked()), this, SLOT(selectAgeRange()));
+    connect(&subareaNext, SIGNAL(clicked()), this, SLOT(nextSubarea()));
+    connect(&subareaBack, SIGNAL(clicked()), this, SLOT(lastSubarea()));
+    connect(&saveButton, SIGNAL(clicked()), this, SLOT(saveAssessment()));
+    connect(&areaNext, SIGNAL(clicked()), this, SLOT(nextArea()));
+    connect(&areaBack, SIGNAL(clicked()), this, SLOT(lastArea()));
 }
 
 void NewAssessmentScreen::selectChild() {
@@ -37,13 +44,29 @@ void NewAssessmentScreen::selectChild() {
 
     name = childSelection.currentText().toStdString();
     term = termSelection.currentText().toStdString();
-    year = "2016";
+    year = getYear(term);
 
     id = childSelection.currentIndex();
 
     cout << name << endl;
     cout << term << endl;
     cout << year << endl;
+
+    loadAssessment();
+}
+
+string NewAssessmentScreen::getYear(string term) {
+    time_t theTime = time(NULL);
+    struct tm *aTime = localtime(&theTime);
+
+    int month = aTime->tm_mon + 1;
+    int year = aTime->tm_year + 1900;
+
+    if (term == "Autumn" && month < 7) {
+        year--;
+    }
+
+    return to_string(year);
 }
 
 void NewAssessmentScreen::createSelectLayout() {
@@ -102,15 +125,24 @@ void NewAssessmentScreen::createAssessmentLayout() {
     //add all of the widgets to the
     //assessment layout
 
+    areaBack.setText("Back");
     areaSet.setText("Select Area");
-    subareaSet.setText("Select Sub-Area");
+    areaNext.setText("Next");
 
+    subareaBack.setText("Back");
+    subareaSet.setText("Select Sub-Area");
+    subareaNext.setText("Next");
+
+    areaLayout.addWidget(&areaBack);
     areaLayout.addWidget(&areaCb);
     areaLayout.addWidget(&areaSet);
+    areaLayout.addWidget(&areaNext);
     assessLayout.addLayout(&areaLayout);
 
+    subareaLayout.addWidget(&subareaBack);
     subareaLayout.addWidget(&subareaCb);
     subareaLayout.addWidget(&subareaSet);
+    subareaLayout.addWidget(&subareaNext);
     assessLayout.addLayout(&subareaLayout);
 
     assessLayout.addWidget(&text);
@@ -118,10 +150,12 @@ void NewAssessmentScreen::createAssessmentLayout() {
     //set text of the buttons
     backButton.setText("Back");
     selectButton.setText("Select");
+    saveButton.setText("Save");
     nextButton.setText("Next");
 
     buttonLayout.addWidget(&backButton);
     buttonLayout.addWidget(&selectButton);
+    buttonLayout.addWidget(&saveButton);
     buttonLayout.addWidget(&nextButton);
 
     assessLayout.addLayout(&buttonLayout);
@@ -204,9 +238,7 @@ void NewAssessmentScreen::setSubareaSlot() {
 void NewAssessmentScreen::nextAgeRange() {
     //skip to the last area and sub area
     //if needed
-    if (ageRange == ranges.size() -1) {
-        nextSubarea();
-    } else {
+    if (ageRange < ranges.size() - 1) {
         setAgeRange(ageRange + 1);
     }
 }
@@ -214,9 +246,7 @@ void NewAssessmentScreen::nextAgeRange() {
 void NewAssessmentScreen::lastAgeRange() {
     //skip to the last area and sub area
     //if needed
-    if (ageRange == 0) {
-        lastSubarea();
-    } else {
+    if (ageRange > 0) {
         setAgeRange(ageRange - 1);
     }
 }
@@ -228,15 +258,15 @@ void NewAssessmentScreen::nextSubarea() {
             subareaCb.setCurrentIndex(subareaIndex);
 
             setAgeRange(0);
-        } else {
-            if (areaIndex + 1 < subareas.size()) {
-                setArea(areaIndex + 1);
+    } else if (areaIndex + 1 < subareas.size()) {
+            setArea(areaIndex + 1);
 
-                areaCb.setCurrentIndex(areaIndex);
+            areaCb.setCurrentIndex(areaIndex);
 
-                setAgeRange(0);
-            }
-        }
+            setAgeRange(0);
+    } else {
+        saveAssessment();
+    }
 }
 
 void NewAssessmentScreen::lastSubarea() {
@@ -259,6 +289,30 @@ void NewAssessmentScreen::lastSubarea() {
         }
 }
 
+void NewAssessmentScreen::nextArea() {
+    if (areaIndex + 1 < subareas.size()) {
+        setArea(areaIndex + 1);
+
+        areaCb.setCurrentIndex(areaIndex);
+
+        setAgeRange(0);
+    } else {
+        saveAssessment();
+    }
+}
+
+void NewAssessmentScreen::lastArea() {
+    if (areaIndex - 1 >= 0) {
+        setArea(areaIndex - 1);
+        setSubarea(subareas[subareaIndex].second.size() - 1);
+
+        areaCb.setCurrentIndex(areaIndex);
+        subareaCb.setCurrentIndex(subareas[subareaIndex].second.size() - 1);
+
+        setAgeRange(ranges.size() -1);
+    }
+}
+
 void NewAssessmentScreen::selectAgeRange() {
     //create a new json object for this
     //area and then add it to to the results
@@ -267,6 +321,7 @@ void NewAssessmentScreen::selectAgeRange() {
     json curr_area = json();
     string current_suba = subareas[areaIndex].second[subareaIndex].toStdString();
 
+    //find if the subarea selected exists
     bool found = false;
     int foundIndex;
     int i = 0;
@@ -280,9 +335,14 @@ void NewAssessmentScreen::selectAgeRange() {
         i += 1;
     }
 
+    //add the data to the empty json
     curr_area["title"] = current_suba;
     curr_area["age_range"] = ageRange;
 
+    //add a new json object to the results list
+    //only if the current subarea hasnt been selected
+    //if it has then replace the old data with the
+    //new data
     if (!found) {
         results_json_.push_back(curr_area);
 
@@ -291,7 +351,89 @@ void NewAssessmentScreen::selectAgeRange() {
         results_json_[foundIndex] = curr_area;
     }
 
+    //move to the next subarea
     nextSubarea();
+}
 
-    cout << results_json_ << endl;
+void NewAssessmentScreen::saveAssessment() {
+    //if there are no assessments
+    //for the current child
+    //initialise a new json with
+    // the correct format
+    bool childExists = true;
+
+    if (child_ == json()) {
+        child_["id"] = id;
+        child_["type"] = "individual";
+
+        childExists = false;
+    }
+
+    //add the newly carried out
+    //assessment to the child's
+    //object
+    bool assessExists = false;
+    int foundIndex;
+    int i = 0;
+
+    //see if there already exists an
+    //assessment for this term and year
+    for (json assess : child_["assessments"]) {
+        if (assess["term"] == json(term) && assess["year"] == json(year)) {
+            assessExists = true;
+            foundIndex = i;
+        }
+
+        i++;
+    }
+
+    //if the assessment exists,
+    //modify the existing record,
+    //if not add a new one
+    if (!assessExists) {
+        child_["assessments"][child_["assessments"].size()]["areas"] = results_json_;
+        child_["assessments"][child_["assessments"].size() - 1]["term"] = term;
+        child_["assessments"][child_["assessments"].size() - 1]["year"] = year;
+    } else {
+        child_["assessments"][foundIndex]["areas"] = results_json_;
+        child_["assessments"][foundIndex]["term"] = term;
+        child_["assessments"][foundIndex]["year"] = year;
+    }
+
+    //if the child exists modify
+    //the existing object, if not
+    //add a new one to the end of the file
+    if (childExists) {
+        oldAssJson[childIndex] = child_;
+    } else {
+        oldAssJson.push_back(child_);
+    }
+
+    ofstream output("./data/assessments.json");
+    output << oldAssJson.dump();
+
+    //go back to the child selection screen
+    //and reset the areas
+    layout.setCurrentIndex(0);
+
+    areaIndex = 0;
+    subareaIndex = 0;
+    ageRange = 0;
+}
+
+void NewAssessmentScreen::loadAssessment() {
+    ifstream oldAssFile("./data/assessments.json", ifstream::binary);
+    oldAssJson = json::parse(oldAssFile);
+
+    int i = 0;
+
+    for (json child : oldAssJson) {
+        if (child["id"] == json(id)) {
+            child_ = child;
+
+            childIndex = i;
+        }
+
+        i++;
+    }  
 }

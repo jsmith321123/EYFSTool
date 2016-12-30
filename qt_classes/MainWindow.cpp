@@ -24,6 +24,8 @@ MainWindow::MainWindow(int al) {
 
 	centralWidget.setLayout(&layout);
 
+	centralWidget.setFixedSize(500, 300);
+
 	setCentralWidget(&centralWidget);
 }
 

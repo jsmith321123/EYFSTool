@@ -28,9 +28,7 @@ Q_OBJECT
 
 public:
 	NewAssessmentScreen();
-	void createSelectLayout();
 	void updateList();
-	void createAssessmentLayout();
 	void getAreas();
 
 public slots:
@@ -42,16 +40,28 @@ public slots:
 	void nextAgeRange();
 	void lastAgeRange();
 
+	void nextSubarea();
+	void lastSubarea();
+
+	void nextArea();
+	void lastArea();
+
 	void selectAgeRange();
+
+	void saveAssessment();
 
 private:
 	void setArea(int index);
 	void setSubarea(int index);
 
+	void createSelectLayout();
+	void createAssessmentLayout();
+
 	void setAgeRange(int index);
 
-	void nextSubarea();
-	void lastSubarea();
+	void loadAssessment();
+
+	string getYear(string term);
 
 	//child selection
 	QComboBox childSelection;
@@ -65,22 +75,30 @@ private:
 	string name;
 	string year;
 	string term;
+	string gender;
 	int id;
 
+	int childIndex;
+
 	//assessment
+	QPushButton areaBack;
 	QComboBox areaCb;
 	QPushButton areaSet;
 	QHBoxLayout areaLayout;
+	QPushButton areaNext;
 
+	QPushButton subareaBack;
 	QComboBox subareaCb;
 	QPushButton subareaSet;
 	QHBoxLayout subareaLayout;
+	QPushButton subareaNext;
 
 	QTextEdit text;
 	QPushButton backButton;
 	QPushButton selectButton;
 	QPushButton nextButton;
 	QHBoxLayout buttonLayout;
+	QPushButton saveButton;
 
 	QVBoxLayout assessLayout;
 	QWidget assessWidget;
@@ -101,6 +119,9 @@ private:
 	json details_json_;
 	json assessment_json;
 	json results_json_;
+	json oldAssJson;
+
+	json child_;
 
 	vector<string> completedSa;
 };
