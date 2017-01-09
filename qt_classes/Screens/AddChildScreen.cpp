@@ -2,9 +2,6 @@
 
 #include "AddChildScreen.h"
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-
 #include <fstream>
 
 #include "./../../libraries/json.hpp"
@@ -19,6 +16,7 @@ AddChildScreen::AddChildScreen() {
 	//setting the text for the labels
 	forenameLabel.setText("Forename:");
 	surnameLabel.setText("Surname:");
+	genderLabel.setText("Gender: ");
 	dobLabel.setText("Date of birth:");
 	knownAsLabel.setText("Known as:");
 	negLabel.setText("NEG:");
@@ -28,15 +26,17 @@ AddChildScreen::AddChildScreen() {
 	//adding labels to the layout
 	forenameLayout.addWidget(&forenameLabel);
 	surnameLayout.addWidget(&surnameLabel);
+	genderLayout.addWidget(&genderLabel);
 	dobLayout.addWidget(&dobLabel);
 	knownAsLayout.addWidget(&knownAsLabel);
 	negLayout.addWidget(&negLabel);
 	f2yoLayout.addWidget(&f2yoLabel);
 	eyppLayout.addWidget(&eyppLabel);
 
-	//adding line edits to the layout
+	//adding inputs to the layout
 	forenameLayout.addWidget(&forenameLineEdit);
 	surnameLayout.addWidget(&surnameLineEdit);
+	genderLayout.addWidget(&genderCB);
 	dobLayout.addWidget(&dobDateEdit);
 	knownAsLayout.addWidget(&knownAsLineEdit);
 	negLayout.addWidget(&negCheckBox);
@@ -47,6 +47,7 @@ AddChildScreen::AddChildScreen() {
 	layout.addLayout(&forenameLayout);
 	layout.addLayout(&surnameLayout);
 	layout.addLayout(&knownAsLayout);
+	layout.addLayout(&genderLayout);
 	layout.addLayout(&dobLayout);
 	layout.addLayout(&negLayout);
 	layout.addLayout(&f2yoLayout);
@@ -60,6 +61,11 @@ AddChildScreen::AddChildScreen() {
 
 	submit.setText("Submit");
 
+	//set the contents of the gender box
+	QStringList genders;
+	genders << "Male" << "Female";
+	genderCB.insertItems(0, genders);
+
 	//connections
 	connect(&submit, SIGNAL(clicked()), this, SLOT(addChild()));
 }
@@ -68,6 +74,7 @@ void AddChildScreen::addChild () {
 	//get the contents of the fields
 	QString forename = forenameLineEdit.text();
 	QString surname = surnameLineEdit.text();
+	QString gender = genderCB.currentText();
 	QString dob = dobDateEdit.date().toString();
 	QString knownAs = knownAsLineEdit.text();
 	int neg = negCheckBox.isChecked();
@@ -79,6 +86,7 @@ void AddChildScreen::addChild () {
 	
 	new_child["forename"] = forename.toStdString();
 	new_child["surname"] = surname.toStdString();
+	new_child["gender"] = gender.toStdString();
 	new_child["dob"] = dob.toStdString();
 	new_child["knownAs"] = knownAs.toStdString();
 	new_child["neg"] = neg;

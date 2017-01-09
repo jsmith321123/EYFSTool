@@ -5,8 +5,6 @@
 #include "MainWindow.h"
 #include "./../libraries/json.hpp"
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
 #include <QString>
 #include <QDebug>
 

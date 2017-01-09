@@ -14,7 +14,6 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPushButton>
-#include <QSqlDatabase>
 #include <QStackedLayout>
 #include <QWidget>
 #include <QHBoxLayout>
@@ -60,6 +59,10 @@ private:
 	void setAgeRange(int index);
 
 	void loadAssessment();
+
+	void setLastAssessedAR();
+
+	int getIndex(int a, int s);
 
 	string getYear(string term);
 
@@ -115,15 +118,22 @@ private:
 	vector<QString> ranges = {"0-11 months", "8-20 months", "16-26 months",
 							  "22-36 months", "30-50 months", "40-60+ months"};
 
+
+	//find whether assessment exits
+	bool assessExists = false;
+	int assessIndex = 0;
+
 	//json
 	json details_json_;
 	json assessment_json;
+	json prev_assessment_json;
 	json results_json_;
 	json oldAssJson;
 
 	json child_;
 
 	vector<string> completedSa;
+	map<string, int> prevAgeRanges;
 };
 
 #endif //NEWASSESSMENTSCREEN_H

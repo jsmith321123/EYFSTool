@@ -10,7 +10,6 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QString>
-#include <QSqlDatabase>
 
 //headers
 #include "MainWindow.h"

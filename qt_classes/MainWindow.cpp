@@ -2,8 +2,6 @@
 #include "Screen.h"
 
 #include <Qt>
-#include <QSqlDatabase>
-
 
 
 MainWindow::MainWindow(int al) {
@@ -12,6 +10,7 @@ MainWindow::MainWindow(int al) {
 	screens[2] = new CreateUserScreen(al);
 	screens[3] = new CreateReportContainerScreen();
 	screens[4] = new NewAssessmentScreen();
+	screens[5] = new  LoadReportScreen();
 
 	for (Screen* s : screens) {
 		mainScreen.addWidget(s);
@@ -54,4 +53,8 @@ void NavigationBar::setCreateReport() {
 
 void NavigationBar::setNewAssessment() {
 	mw_->changeScreen(4);
+}
+
+void NavigationBar::setLoadReport() {
+	mw_->changeScreen(5);
 }

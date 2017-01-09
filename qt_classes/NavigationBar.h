@@ -23,6 +23,7 @@ public slots:
 	void setCreateReport();
 	void setCreateUser();
 	void setNewAssessment();
+	void setLoadReport();
 
 private:
 	void setScreen(int index);

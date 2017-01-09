@@ -1,14 +1,13 @@
 #include "NewAssessmentScreen.h"
 #include <QStringList>
 
-#include <QSqlQuery>
-#include <QSqlDatabase>
-
 #include <fstream>
 
 #include <time.h>
 
 #include "./../../libraries/json.hpp"
+
+#include "NewGroupDialog.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -21,9 +20,6 @@ NewAssessmentScreen::NewAssessmentScreen () {
     getAreas();
 
     createAssessmentLayout();
-
-    //set the first area to be 0
-    setArea(0);
 
     //connections
     connect(&submitButton, SIGNAL(clicked()), this, SLOT(selectChild()));
@@ -53,6 +49,10 @@ void NewAssessmentScreen::selectChild() {
     cout << year << endl;
 
     loadAssessment();
+
+    //set the first area to be 0
+    setArea(0);
+    setSubarea(0);
 }
 
 string NewAssessmentScreen::getYear(string term) {
@@ -190,11 +190,12 @@ void NewAssessmentScreen::getAreas() {
 }
 
 void NewAssessmentScreen::setArea(int index) {
-    //set the subarea index to 0 if the area
+    //set the subarea index to 0 or the last
+    //assessed age range if the area
     //index has changed and also update the
     //list of subareas
     if (areaIndex != index) {
-        subareaIndex = 0;
+        setSubarea(0);
 
         //set the new subareas in the subarea box
         subareaCb.clear();
@@ -209,14 +210,39 @@ void NewAssessmentScreen::setArea(int index) {
         range_text += "- " + point.dump().substr(1, point.dump().length() - 2) + "\n";
     }
 
+    bool subareaCompleted = false;
+
+    for (string sa : completedSa) {
+        if (sa == subareas[areaIndex].second[subareaIndex].toStdString()) {
+            subareaCompleted = true;
+        }
+    }
+
+    QString sSubAreaComplete = (subareaCompleted) ?
+                               (QString("yes")) : (QString("no"));
+
     text.setText(
             "Age range: " + ranges[ageRange] + "\n"
+            + "Sub-Area complete: " + sSubAreaComplete + "\n"
             + QString::fromStdString(range_text)
         );
 }
 
 void NewAssessmentScreen::setSubarea(int index) {
     subareaIndex = index;
+    subareaCb.setCurrentIndex(index);
+
+    if (prev_assessment_json != json()) {
+        cout << prev_assessment_json << endl;
+        if (prev_assessment_json["areas"][getIndex(areaIndex, subareaIndex)] != NULL) {
+            int ar = prev_assessment_json["areas"][getIndex(areaIndex, subareaIndex)]["age_range"];
+            setAgeRange(ar);
+        } else {
+            setAgeRange(0);
+        }
+    } else {
+        setAgeRange(0);
+    }
 
     setArea(areaIndex);
 }
@@ -256,16 +282,10 @@ void NewAssessmentScreen::nextSubarea() {
             setSubarea(subareaIndex + 1);
 
             subareaCb.setCurrentIndex(subareaIndex);
-
-            setAgeRange(0);
     } else if (areaIndex + 1 < subareas.size()) {
             setArea(areaIndex + 1);
 
             areaCb.setCurrentIndex(areaIndex);
-
-            setAgeRange(0);
-    } else {
-        saveAssessment();
     }
 }
 
@@ -296,8 +316,6 @@ void NewAssessmentScreen::nextArea() {
         areaCb.setCurrentIndex(areaIndex);
 
         setAgeRange(0);
-    } else {
-        saveAssessment();
     }
 }
 
@@ -316,124 +334,149 @@ void NewAssessmentScreen::lastArea() {
 void NewAssessmentScreen::selectAgeRange() {
     //create a new json object for this
     //area and then add it to to the results
-
-
     json curr_area = json();
     string current_suba = subareas[areaIndex].second[subareaIndex].toStdString();
-
-    //find if the subarea selected exists
-    bool found = false;
-    int foundIndex;
-    int i = 0;
-
-    for (string sa : completedSa) {
-        if (sa == current_suba) {
-            found = true;
-            foundIndex = i;
-        }
-
-        i += 1;
-    }
 
     //add the data to the empty json
     curr_area["title"] = current_suba;
     curr_area["age_range"] = ageRange;
 
-    //add a new json object to the results list
-    //only if the current subarea hasnt been selected
-    //if it has then replace the old data with the
-    //new data
-    if (!found) {
-        results_json_.push_back(curr_area);
-
-        completedSa.push_back(current_suba);
-    } else {
-        results_json_[foundIndex] = curr_area;
-    }
+    //update the results with the new
+    //age range
+    results_json_[getIndex(areaIndex, subareaIndex)] = curr_area;
 
     //move to the next subarea
     nextSubarea();
 }
 
-void NewAssessmentScreen::saveAssessment() {
-    //if there are no assessments
-    //for the current child
-    //initialise a new json with
-    // the correct format
-    bool childExists = true;
+int NewAssessmentScreen::getIndex(int a, int s) {
+    int index = 0;
+    bool found = false;
 
-    if (child_ == json()) {
-        child_["id"] = id;
-        child_["type"] = "individual";
+    QString target = subareas[a].second[s];
 
-        childExists = false;
-    }
-
-    //add the newly carried out
-    //assessment to the child's
-    //object
-    bool assessExists = false;
-    int foundIndex;
-    int i = 0;
-
-    //see if there already exists an
-    //assessment for this term and year
-    for (json assess : child_["assessments"]) {
-        if (assess["term"] == json(term) && assess["year"] == json(year)) {
-            assessExists = true;
-            foundIndex = i;
+    for (pair<QString, QStringList> ar : subareas) {
+        for (QString su : ar.second) {
+            index++;
+            if (su == target) {
+                found = true;
+                break;
+            }
         }
 
-        i++;
+        if (found) {
+            break;
+        }
     }
 
-    //if the assessment exists,
-    //modify the existing record,
-    //if not add a new one
-    if (!assessExists) {
-        child_["assessments"][child_["assessments"].size()]["areas"] = results_json_;
-        child_["assessments"][child_["assessments"].size() - 1]["term"] = term;
-        child_["assessments"][child_["assessments"].size() - 1]["year"] = year;
-    } else {
-        child_["assessments"][foundIndex]["areas"] = results_json_;
-        child_["assessments"][foundIndex]["term"] = term;
-        child_["assessments"][foundIndex]["year"] = year;
-    }
+    return index -1;
+}
 
-    //if the child exists modify
-    //the existing object, if not
-    //add a new one to the end of the file
-    if (childExists) {
+void NewAssessmentScreen::saveAssessment() {
+    //if at least one area has been
+    //selected update the json
+    if (results_json_ != NULL) {
+        //set the areas field of the json
+        //to the results
+        assessment_json["areas"] = results_json_;
+
+        //add this assessment to the childs
+        //object
+        child_["assessments"][assessIndex] = assessment_json;
+
+        //add this child to the whole json
         oldAssJson[childIndex] = child_;
-    } else {
-        oldAssJson.push_back(child_);
     }
 
+    //save the json
     ofstream output("./data/assessments.json");
     output << oldAssJson.dump();
 
-    //go back to the child selection screen
-    //and reset the areas
     layout.setCurrentIndex(0);
+    results_json_ = json();
 
-    areaIndex = 0;
-    subareaIndex = 0;
-    ageRange = 0;
+    setArea(0);
+    setSubarea(0);
+    setAgeRange(0);
 }
 
 void NewAssessmentScreen::loadAssessment() {
+    //open the file and parse the json
     ifstream oldAssFile("./data/assessments.json", ifstream::binary);
     oldAssJson = json::parse(oldAssFile);
+    oldAssFile.close();
 
-    int i = 0;
+    //find the child and its index
+    bool childFound = false;
+    int x = 0;
 
     for (json child : oldAssJson) {
-        if (child["id"] == json(id)) {
+        if (child["id"].dump() == to_string(id)) {
             child_ = child;
-
-            childIndex = i;
+            childFound = true;
+            childIndex = x;
         }
 
-        i++;
-    }  
+        x++;
+    }
+
+    //if the child wasn't found
+    //create a json with the
+    //correct format
+    if (!childFound) {
+        child_ = json();
+
+        child_["id"] = id;
+        child_["type"] = "individual";
+
+        assessment_json = json();
+        assessment_json["term"] = term;
+        assessment_json["year"] = year;
+        assessIndex = 0;
+
+        childIndex = x;
+    } else {
+        //if the child is found
+        //see if this assessment
+        //allready exists
+        bool assessFound = false;
+        int i = 0;
+
+        for (json assess : child_["assessments"]) {
+            //if it exists get the index and
+            //add all its completed subareas
+            //to the completedSA vector
+            if (assess["year"] == json(year) && assess["term"] == json(term)) {
+                assessment_json = assess;
+                results_json_ = assess["areas"];
+                assessFound = true;
+                assessIndex = i;
+
+                //add all of the completed subareas
+                //to the vector
+                for (json area : results_json_) {
+                    string title = area["title"];
+                    completedSa.push_back(title);
+                }
+            }
+
+            i++;
+        }
+
+        //if there was no previous
+        //assessment create one with the
+        //correct format
+        if (!assessFound) {
+            assessment_json = json();
+            assessment_json["term"] = term;
+            assessment_json["year"] = year;
+            assessIndex = i;
+        }
+
+        //if there is a previous assessment
+        //find it
+        if (assessIndex > 0) {
+            prev_assessment_json = child_["assessments"][assessIndex - 1];
+        }
+    }
 }

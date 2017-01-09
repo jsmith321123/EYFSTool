@@ -6,8 +6,6 @@
 #include <iostream>
 #include <fstream>
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
 #include <QString>
 #include <QStringList>
 
@@ -66,8 +64,6 @@ CreateUserScreen::CreateUserScreen(int al) {
 }
 
 void CreateUserScreen::addUser() {
-	db_.open();
-
 	//bool and string that will help give
 	//feedback to the user
 	bool succeded = false;

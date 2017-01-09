@@ -35,7 +35,7 @@ public:
 
 	int currentIndex = 1;
 
-	Screen* screens [5];
+	Screen* screens [6];
 private:
 	Screen *currentScreen;
 

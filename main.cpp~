@@ -8,7 +8,6 @@
 //qt
 #include <QtCore>
 #include <QApplication>
-#include <QSqlDatabase>
 
 //testing new assessment REMOVE!
 #include "qt_classes/Screens/NewAssessmentScreen.h"

@@ -11,9 +11,10 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QDateEdit>
-#include <QSqlDatabase>
 #include <QPushButton>
 #include <QCheckBox>
+#include <QComboBox>
+#include <QStringList>
 
 class AddChildScreen : public Screen {
 	
@@ -38,6 +39,10 @@ private:
 	QLabel knownAsLabel;
 	QHBoxLayout knownAsLayout;
 
+	QComboBox genderCB;
+	QLabel genderLabel;
+	QHBoxLayout genderLayout;
+
 	QDateEdit dobDateEdit;
 	QLabel dobLabel;
 	QHBoxLayout dobLayout;
@@ -57,8 +62,6 @@ private:
 	QPushButton submit;
 
 	QVBoxLayout layout;
-
-	QSqlDatabase db_;
 };
 
 #endif //ADDCHILDSCREEN_H

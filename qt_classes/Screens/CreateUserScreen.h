@@ -10,7 +10,6 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
-#include <QSqlDatabase>
 
 //headers
 #include "./Screen.h"
@@ -60,9 +59,6 @@ private:
 
 	//overall layout
 	QVBoxLayout layout;
-
-	//database
-	QSqlDatabase db_;
 };
 
 #endif

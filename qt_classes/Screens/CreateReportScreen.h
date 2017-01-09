@@ -14,6 +14,8 @@
 #include <QString>
 
 class CreateReportScreen : public Screen {
+Q_OBJECT;
+
 public:
 	CreateReportScreen(string type);
 
@@ -21,23 +23,33 @@ public:
 	void setGroup();
 	void setLearningArea();
 	
-	void createReport();
+	void createLAReport();
 
 	string type_;
 
+public slots:
+	void createReport();
+
+	void newGroup();
+
 private:
+	void getChildren();
+	void getTermYear();
+
 	QComboBox select;
 	QLabel selectLabel;
 	QHBoxLayout selectLayout;
 
 	QTextEdit detailTextEdit;
 
-	QDateEdit startDateEdit;
 	QLabel startLabel;
+	QComboBox startTerm;
+	QComboBox startYear;
 	QHBoxLayout startLayout;
 
-	QDateEdit endDateEdit;
 	QLabel endLabel;
+	QComboBox endTerm;
+	QComboBox endYear;
 	QHBoxLayout endLayout;
 
 	QPushButton submitButton;
@@ -46,8 +58,10 @@ private:
 
 	QPushButton addGroupButton;
 
+	int id;
 
-
+	vector<QString> ranges = {"0-11 months", "8-20 months", "16-26 months",
+							  "22-36 months", "30-50 months", "40-60+ months"};
 };
 
 #endif
