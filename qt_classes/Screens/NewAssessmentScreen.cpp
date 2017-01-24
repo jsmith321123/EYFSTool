@@ -480,3 +480,7 @@ void NewAssessmentScreen::loadAssessment() {
         }
     }
 }
+
+void NewAssessmentScreen::calculateGroupValues() {
+    
+}

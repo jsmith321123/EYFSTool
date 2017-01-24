@@ -128,82 +128,98 @@ void NewGroupDialog::createGroup() {
 		ids.push_back(childId);
 	}
 
-	//loop through all of the children
-	//in the group
+	/*
+	 * create a new object for the
+	 * group and add it to the 
+	 * assessments json
+	 */
+
+	json newGroupAssessment;
+
+	//for each child go through each
+	//assessment and add it to the group
 	for (int childId : ids) {
-		json child = children[childId];
+		json child_;
 
-		for (json assess : assessments[childId]["assessments"]) {
-			//find if an assessment with this month
-			//and year currently exists in the group
-			if (true) {
+		for (json child : assessments) {
+			if (child["id"] == json(childId)
+				&& child["type"] == json("individual")) {
+				child_ = child;
+			}
+		}
+
+		for (json assess : child_["assessments"]) {
+			//find if a group assessment
+			//exists for this term and year
+			bool assessFound = false;
+			int assessIndex;
+			int i = 0;
+			cout << 02 << endl;
+
+			for (json groupAssess : newGroupAssessment["assessments"]) {
+				if (groupAssess["term"] == assess["term"]
+					&& groupAssess["year"] == assess["year"]) {
+					assessFound = true;
+					assessIndex = i;
+				}
+
+				i++;
+			}
+
+			assessIndex = (assessFound) ? (assessIndex) : (i);
+
+			for (json area : assess["areas"]) {
+				cout << 04 << endl;
+				//find if the area is already
+				//in the group object
+				bool areaFound = false;
+				int areaIndex;
 				int i = 0;
-				int index;
-				bool found = false;
 
-				for (json groupAssess : newGroup["assessments"]) {
-					if (groupAssess["term"] == assess["term"] && 
-						groupAssess["year"] == assess["year"]) {
-						found = true;
-						index = i;
+				for (json groupArea : newGroupAssessment["assessments"][assessIndex]["areas"]) {
+					if (groupArea["title"] == area["title"]) {
+						areaFound = true;
+						areaIndex = i;
 					}
 
 					i++;
 				}
 
-				index = (found) ? (index) : (i);
+				areaIndex = (areaFound) ? (areaIndex) : (i);
 
-				if (!found) {
-					cout << "assessment found" << endl;
+				//set the value for this area to
+				//correct average
+				int currRange = 0;
+				int currNumber = 0;
 
-					newGroup["assessments"][index]["term"] = assess["term"];
-					newGroup["assessments"][index]["year"] = assess["year"];
+				if (areaFound) {
+					int currRange = newGroupAssessment["assessments"][assessIndex]["areas"][areaIndex]["age_range"];
+					int currNumber = newGroupAssessment["assessments"][assessIndex]["areas"][areaIndex]["number"];
+				} else {
+					newGroupAssessment["assessments"][assessIndex]["areas"][areaIndex]["title"] = area["title"];
 				}
+				
+				cout << child_ << endl;
 
-				cout << "areas: " << assess["areas"] << endl;
+				int newRange = area["age_range"];
+				int newAveRange = (currRange + newRange) / (currNumber + 1);
 
-				for (json area : assess["areas"]) {
-					cout << 0 << endl;
+				newGroupAssessment["assessments"][assessIndex]["areas"][areaIndex]["age_range"] = newAveRange;
+				newGroupAssessment["assessments"][assessIndex]["areas"][areaIndex]["number"] = currNumber + 1;
 
-					//find the corresponding area index
-					bool areaFound = false;
-					int x = 0;
-					int areaIndex;
-
-					for (json groupArea : newGroup["assessments"][index]["areas"]) {
-						if (groupArea["title"] == area["title"]) {
-							areaFound = true;
-							areaIndex = x;
-						}
-
-						x++;
-					}
-
-					areaIndex = (areaFound) ? (areaIndex) : (x);
-
-					if (!areaFound) {
-						newGroup["assessments"][index]["areas"][areaIndex]["title"] = area["title"];
-						newGroup["assessments"][index]["areas"][areaIndex]["age_range"] = 0;
-						newGroup["assessments"][index]["areas"][areaIndex]["number"] = 0;
-					}
-
-					int number = newGroup["assessments"][index]["areas"][areaIndex]["number"];
-					int currentAgeRange = newGroup["assessments"][index]["areas"][areaIndex]["age_range"];
-
-					int newAgeRange = area["age_range"];
-
-					int newTotal = (currentAgeRange + newAgeRange) / (number + 1);
-
-					newGroup["assessments"][index]["areas"][areaIndex]["age_range"] = newTotal;
-				}
+				cout << newGroupAssessment << endl;
 			}
 		}
 	}
 
 	groupsJson.push_back(newGroup);
 
-	cout << groupsJson << endl;
+	cout << "groups: " << groupsJson << endl;
+	cout << "assessments: " << assessments << endl;
 
-	ofstream output("./data/groups.json");
-	output << groupsJson.dump();
+	ofstream outputGroups("./data/groups.json");
+	outputGroups << groupsJson.dump();
+
+	ofstream outputAssess("./data/group_assessments.json");
+	outputAssess << assessments.dump();
 }

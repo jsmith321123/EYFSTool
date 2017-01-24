@@ -29,7 +29,6 @@ CreateReportScreen::CreateReportScreen(string type) {
 	connect(&addGroupButton, SIGNAL(clicked()), this, SLOT(newGroup()));
 }
 
-
 void CreateReportScreen::setIndividual() {
 	submitButton.setText("submit");
 

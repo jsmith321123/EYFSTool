@@ -29,6 +29,7 @@ public:
 	NewAssessmentScreen();
 	void updateList();
 	void getAreas();
+	void calculateGroupValues();
 
 public slots:
 	void selectChild();

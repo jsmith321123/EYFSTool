@@ -76,6 +76,56 @@ void LoadReportScreen::chooseFile() {
 			layout.addWidget(newWidget);
 
 			//connections
+			connect(newNButton, SIGNAL(clicked()), this, SLOT(nextArea()));
+			connect(newLButton, SIGNAL(clicked()), this, SLOT(lastArea()));
+		}
+
+		layout.setCurrentIndex(1);
+	} else if (type == "group") {
+		int i = 0;
+
+		for (json area : report["areas"]) {
+			GraphGraphicsScene *new_graph = new GraphGraphicsScene();
+
+			//get x values
+			vector<int> ranges = area["ranges"];
+
+			//get y values
+			vector<int> months;
+			for (int i = 0; i < ranges.size(); i++) {
+				months.push_back(i);
+			}
+
+			new_graph->drawLines(months, ranges);
+			QTextEdit *new_text_edit = new QTextEdit();
+
+			graphs.push_back(new_graph);
+			textEdits.push_back(new_text_edit);
+		}
+
+		for (int i = 0; i < graphs.size(); i++) {
+			QHBoxLayout *newHLayout = new QHBoxLayout();
+			QHBoxLayout *newButtonLayout = new QHBoxLayout();
+			QVBoxLayout *newVLayout = new QVBoxLayout();
+
+			QPushButton *newNButton = new QPushButton("Next");
+			QPushButton *newLButton = new QPushButton("Last");
+
+			newHLayout->addWidget(&graphs[i]->view);
+			newHLayout->addWidget(textEdits[i]);
+
+			newButtonLayout->addWidget(newLButton);
+			newButtonLayout->addWidget(newNButton);
+
+			newVLayout->addLayout(newHLayout);
+			newVLayout->addLayout(newButtonLayout);
+
+			QWidget *newWidget = new QWidget();
+			newWidget->setLayout(newVLayout);
+
+			layout.addWidget(newWidget);
+
+			//connections
 
 			connect(newNButton, SIGNAL(clicked()), this, SLOT(nextArea()));
 			connect(newLButton, SIGNAL(clicked()), this, SLOT(lastArea()));
