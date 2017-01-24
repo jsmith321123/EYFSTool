@@ -87,6 +87,20 @@ void CreateReportScreen::setGroup() {
 	layout.addWidget(&submitButton);
 
 	setLayout(&layout);
+
+	//get the list of groups
+	ifstream groupsFile("./data/groups.json", ifstream::binary);
+	json groupsJson = json::parse(groupsFile);
+	groupsFile.close();
+
+	QStringList groups;
+
+	for (json group : groupsJson) {
+		string groupName = group["name"];
+		groups << QString::fromStdString(groupName);
+	}
+
+	select.insertItems(0, groups);
 }
 
 void CreateReportScreen::setLearningArea() {
@@ -243,13 +257,13 @@ void CreateReportScreen::createReport() {
 					//with the areas title
 					json newArea;
 					newArea["title"] = title;
-					newArea["ranges"].push_back(ageRange);
+					newArea["ranges"].push_back(ageRange + 1);
 
 					report["areas"].push_back(newArea);
 				} else {
 					//if it was found modify
 					//the existing object
-					report["areas"][index]["ranges"].push_back(ageRange);
+					report["areas"][index]["ranges"].push_back(ageRange + 1);
 				}
 			}
 		}

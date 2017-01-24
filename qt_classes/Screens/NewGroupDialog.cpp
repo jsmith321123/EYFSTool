@@ -79,8 +79,7 @@ void NewGroupDialog::createGroup() {
 	int negIndex = negCB.currentIndex() - 1;
 	int eyppIndex = eyppCB.currentIndex() - 1;
 
-	//create a new object for the group and add it
-	//to the group file
+	//create a new object for the group
 	json newGroup;
 	newGroup["name"] = name;
 	newGroup["gender"] = gender;
@@ -88,11 +87,6 @@ void NewGroupDialog::createGroup() {
 	newGroup["neg"] = neg;
 	newGroup["eypp"] = eypp;
 	newGroup["id"] = id;
-
-	groupsJson.push_back(newGroup);
-
-	ofstream output("./data/groups.json");
-	output << groupsJson.dump();
 
 	/*
 	 * Calculate the assessments for the group
@@ -133,4 +127,83 @@ void NewGroupDialog::createGroup() {
 
 		ids.push_back(childId);
 	}
+
+	//loop through all of the children
+	//in the group
+	for (int childId : ids) {
+		json child = children[childId];
+
+		for (json assess : assessments[childId]["assessments"]) {
+			//find if an assessment with this month
+			//and year currently exists in the group
+			if (true) {
+				int i = 0;
+				int index;
+				bool found = false;
+
+				for (json groupAssess : newGroup["assessments"]) {
+					if (groupAssess["term"] == assess["term"] && 
+						groupAssess["year"] == assess["year"]) {
+						found = true;
+						index = i;
+					}
+
+					i++;
+				}
+
+				index = (found) ? (index) : (i);
+
+				if (!found) {
+					cout << "assessment found" << endl;
+
+					newGroup["assessments"][index]["term"] = assess["term"];
+					newGroup["assessments"][index]["year"] = assess["year"];
+				}
+
+				cout << "areas: " << assess["areas"] << endl;
+
+				for (json area : assess["areas"]) {
+					cout << 0 << endl;
+
+					//find the corresponding area index
+					bool areaFound = false;
+					int x = 0;
+					int areaIndex;
+
+					for (json groupArea : newGroup["assessments"][index]["areas"]) {
+						if (groupArea["title"] == area["title"]) {
+							areaFound = true;
+							areaIndex = x;
+						}
+
+						x++;
+					}
+
+					areaIndex = (areaFound) ? (areaIndex) : (x);
+
+					if (!areaFound) {
+						newGroup["assessments"][index]["areas"][areaIndex]["title"] = area["title"];
+						newGroup["assessments"][index]["areas"][areaIndex]["age_range"] = 0;
+						newGroup["assessments"][index]["areas"][areaIndex]["number"] = 0;
+					}
+
+					int number = newGroup["assessments"][index]["areas"][areaIndex]["number"];
+					int currentAgeRange = newGroup["assessments"][index]["areas"][areaIndex]["age_range"];
+
+					int newAgeRange = area["age_range"];
+
+					int newTotal = (currentAgeRange + newAgeRange) / (number + 1);
+
+					newGroup["assessments"][index]["areas"][areaIndex]["age_range"] = newTotal;
+				}
+			}
+		}
+	}
+
+	groupsJson.push_back(newGroup);
+
+	cout << groupsJson << endl;
+
+	ofstream output("./data/groups.json");
+	output << groupsJson.dump();
 }

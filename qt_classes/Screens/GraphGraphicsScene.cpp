@@ -9,10 +9,7 @@ GraphGraphicsScene::GraphGraphicsScene() {
 	//assign this scene to the view
 	view.setScene(this);
 	view.setSceneRect(-1, -1, 12, 12);
-	view.scale(25, -25);
-
-	view.setFixedWidth(25 * 12);
-	view.setFixedHeight(25 * 12);
+	view.scale(15, -15);
 	
 	//add the axis lines
 	QGraphicsLineItem *x_axis = addLine(0, 0, 10, 0);

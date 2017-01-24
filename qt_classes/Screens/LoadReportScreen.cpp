@@ -3,6 +3,7 @@
 #include <fstream>
 #include <QFileDialog>
 #include <QScrollArea>
+#include <QTextEdit>
 
 LoadReportScreen::LoadReportScreen() {
 	//setup the selection screen
@@ -45,23 +46,59 @@ void LoadReportScreen::chooseFile() {
 				months.push_back(i);
 			}
 
-			new_graph->drawLines(ranges, months);
+			new_graph->drawLines(months, ranges);
+			QTextEdit *new_text_edit = new QTextEdit();
 
-			graphs.push_back(new_graph);			
+			graphs.push_back(new_graph);
+			textEdits.push_back(new_text_edit);
 		}
 
-		for (GraphGraphicsScene *graph : graphs) {
-			displayLayout.addWidget(&graph->view);
+		for (int i = 0; i < graphs.size(); i++) {
+			QHBoxLayout *newHLayout = new QHBoxLayout();
+			QHBoxLayout *newButtonLayout = new QHBoxLayout();
+			QVBoxLayout *newVLayout = new QVBoxLayout();
+
+			QPushButton *newNButton = new QPushButton("Next");
+			QPushButton *newLButton = new QPushButton("Last");
+
+			newHLayout->addWidget(&graphs[i]->view);
+			newHLayout->addWidget(textEdits[i]);
+
+			newButtonLayout->addWidget(newLButton);
+			newButtonLayout->addWidget(newNButton);
+
+			newVLayout->addLayout(newHLayout);
+			newVLayout->addLayout(newButtonLayout);
+
+			QWidget *newWidget = new QWidget();
+			newWidget->setLayout(newVLayout);
+
+			layout.addWidget(newWidget);
+
+			//connections
+
+			connect(newNButton, SIGNAL(clicked()), this, SLOT(nextArea()));
+			connect(newLButton, SIGNAL(clicked()), this, SLOT(lastArea()));
 		}
-
-		QScrollArea scroll;
-
-		scroll.setWidget(&displayWidget);
-
-		displayLayout.addSpacing(50);
-		displayWidget.setLayout(&displayLayout);
-		layout.addWidget(&displayWidget);
 
 		layout.setCurrentIndex(1);
 	}
+}
+
+void LoadReportScreen::nextArea() {
+	int noOfAreas = graphs.size();
+	int nextIndex = ((layout.currentIndex()) + 1) % (noOfAreas + 1);
+
+	nextIndex = (nextIndex == 0) ? (1) : (nextIndex);
+
+	layout.setCurrentIndex(nextIndex);
+}
+
+void LoadReportScreen::lastArea() {
+	int noOfAreas = graphs.size();
+	int nextIndex = (layout.currentIndex() - 1);
+	nextIndex = (nextIndex < 1) ? (noOfAreas) : (nextIndex);
+
+
+	layout.setCurrentIndex(nextIndex);
 }

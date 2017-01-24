@@ -10,7 +10,7 @@ MainWindow::MainWindow(int al) {
 	screens[2] = new CreateUserScreen(al);
 	screens[3] = new CreateReportContainerScreen();
 	screens[4] = new NewAssessmentScreen();
-	screens[5] = new  LoadReportScreen();
+	screens[5] = new LoadReportScreen();
 
 	for (Screen* s : screens) {
 		mainScreen.addWidget(s);
@@ -23,7 +23,7 @@ MainWindow::MainWindow(int al) {
 
 	centralWidget.setLayout(&layout);
 
-	centralWidget.setFixedSize(500, 300);
+	//centralWidget.setFixedSize(500, 300);
 
 	setCentralWidget(&centralWidget);
 }

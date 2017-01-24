@@ -23,6 +23,8 @@ public:
 
 public slots:
 	void chooseFile();
+	void nextArea();
+	void lastArea();
 
 private:
 	//report selection
@@ -34,10 +36,13 @@ private:
 	//report display
 	//vector of graphs
 	vector<GraphGraphicsScene *> graphs;
-	vector<QTextEdit> textEdits;
+	vector<QTextEdit *> textEdits;
 
 	QVBoxLayout displayLayout;
 	QWidget displayWidget;
+
+	QPushButton nextButton;
+	QPushButton lastButton;
 
 	QStackedLayout layout;
 
