@@ -173,7 +173,9 @@ void CreateReportScreen::createReport() {
 		return;
 	}
 
-	ifstream assessmentsFile("./data/assessments.json", ifstream::binary);
+	string assFileName = (type_ == "group") ? ("group_assessments.json") : ("assessments.json");
+
+	ifstream assessmentsFile("./data/" + assFileName, ifstream::binary);
 	json assessments = json::parse(assessmentsFile);
 	assessmentsFile.close();
 
@@ -191,6 +193,7 @@ void CreateReportScreen::createReport() {
 
 	//find the json object with the data
 	for (json j : assessments) {
+		cout << j << endl;
 		if (j["id"].dump() == to_string(id) && j["type"] == json(type_)) {
 			data = j;
 		}

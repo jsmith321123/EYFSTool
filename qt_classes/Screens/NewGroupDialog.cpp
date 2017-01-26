@@ -125,7 +125,9 @@ void NewGroupDialog::createGroup() {
 		member = (eyppIndex == -1 && member) ? (true) :
 				 (eyppIndex == childEYPP && member) ? (true) : (false);
 
-		ids.push_back(childId);
+		if (member) {
+			ids.push_back(childId);
+		}
 	}
 
 	/*

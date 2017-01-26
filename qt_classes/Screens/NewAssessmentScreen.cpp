@@ -388,6 +388,9 @@ void NewAssessmentScreen::saveAssessment() {
         oldAssJson[childIndex] = child_;
     }
 
+    //calculate the new group values
+    calculateGroupValues();
+
     //save the json
     ofstream output("./data/assessments.json");
     output << oldAssJson.dump();
@@ -482,5 +485,157 @@ void NewAssessmentScreen::loadAssessment() {
 }
 
 void NewAssessmentScreen::calculateGroupValues() {
+    //load the group and group assessment files
+    ifstream groupsFile("./data/groups.json", ifstream::binary);
+    json groupJson = json::parse(groupsFile);
+
+    cout << groupJson << endl;
+
+    ifstream groupAssessFile("./data/group_assessments.json", ifstream::binary);
+    json groupAssessJson = json::parse(groupAssessFile);
+
+    ifstream childInfoFile("./data/children.json", ifstream::binary);
+    json childInfoJson = json::parse(childInfoFile);
+ 
+    //find if the current child fits into
+    //any groups and then create a list
+    //of groups that they are part of
+    for (json group : groupJson) {
+        int groupId = group["id"];
+
+        bool member;
+
+        indices.insert(make_pair(string("Either"), -1));
+        indices.insert(make_pair(string("No"), 0));
+        indices.insert(make_pair(string("Yes"), 1));
+
+        json childInfo = childInfoJson[id];
+
+        string groupGender = group["gender"];
+        string childGender = childInfo["gender"];
+        member = (groupGender == "Either") ? (true) :
+                 (groupGender == childGender) ? (true) : (false);
+
+        string groupF2YO = group["f2yo"];
+        int f2yoIndex = indices[groupF2YO];
+        int childF2YO = childInfo["f2yo"];
+        member = (groupF2YO == "Either" && member) ? (true) :
+                 (f2yoIndex == childF2YO && member) ? (true) : (false);
+
+        string groupNEG = group["neg"];
+        int negIndex = indices[groupNEG];
+        int childNEG = childInfo["neg"];
+        member = (groupNEG == "Either" && member) ? (true) :
+                 (negIndex == childNEG && member) ? (true) : (false);
+
+        string groupEYPP = group["eypp"];
+        int eyppIndex = indices[groupEYPP];
+        int childEYPP = childInfo["eypp"];
+        member = (groupEYPP == "Either" && member) ? (true) :
+                 (eyppIndex == childEYPP && member) ? (true) : (false);
+
+        if (member) {
+            groupIds.push_back(groupId);
+        }
+    }
     
+    //loop through all of the groups
+    for (int groupId : groupIds) {
+        json group = groupJson[groupId];
+        cout << groupAssessJson << endl;
+
+        //find if there is currently an
+        //object in the assessment json
+        bool groupFound = false;
+
+        for (json tempGroup : groupAssessJson) {
+            int tempId = tempGroup["id"];
+            if (tempId == groupId) {
+                groupFound = true;
+            }
+        }
+
+        if (!groupFound) {
+            json newGroup;
+            newGroup["id"] = groupId;
+            newGroup["type"] = "group";
+
+            groupAssessJson.push_back(newGroup);
+        }
+
+        //find if there is an assessment
+        //for this group, term and year
+        bool assessFound = false;
+        int assessIndex;
+        int i = 0;
+
+        for (json groupAssess : group["assessments"]) {
+            string groupTerm = groupAssess["term"];
+            string groupYear = groupAssess["year"];
+
+            string childTerm = assessment_json["term"];
+            string childYear = assessment_json["year"];
+
+            if (groupTerm == childTerm && groupYear == childYear) {
+                assessFound = true;
+                assessIndex = i;
+            }
+
+            i++;
+        }
+
+        if (!assessFound) {
+            json newAssess;
+            newAssess["term"] = assessment_json["term"];
+            newAssess["year"] = assessment_json["year"];
+
+            groupAssessJson[groupId]["assessments"].push_back(newAssess);
+        } 
+
+        //set the index to the end if it hasn't been changed
+        assessIndex = (assessFound) ? (assessIndex) : (i);
+
+        //loop through the areas in the child's assessment
+        for (json area : assessment_json["areas"]) {
+            //find the index of this area in the group assessment
+            bool areaFound = false;
+            int areaIndex;
+            int i = 0;
+
+            for (json groupArea : group["assessments"][assessIndex]["areas"]) {
+                string groupTitle = groupArea["title"];
+                string childTitle = area["title"];
+
+                if (groupTitle == childTitle) {
+                    areaFound = true;
+                    areaIndex = i;
+                }
+
+                i++;
+            }
+
+            areaIndex = (areaFound) ? (areaIndex) : (i);
+
+            //set the new value of the area in the groups assessment
+            int currRange = 0;
+            int currNumber = 0;
+
+            if (areaFound) {
+                currRange = groupAssessJson[groupId]["assessments"][assessIndex]["areas"][areaIndex]["age_range"];
+                currNumber = groupAssessJson[groupId]["assessments"][assessIndex]["areas"][areaIndex]["number"];
+            } else {
+                groupAssessJson[groupId]["assessments"][assessIndex]["areas"][areaIndex] = json();
+                groupAssessJson[groupId]["assessments"][assessIndex]["areas"][areaIndex]["title"] = area["title"];
+            }
+
+            int newRange =  area["age_range"];
+            int newAveRange = (currRange + newRange) / (currNumber + 1);
+
+            groupAssessJson[groupId]["assessments"][assessIndex]["areas"][areaIndex]["age_range"] = newAveRange;
+            groupAssessJson[groupId]["assessments"][assessIndex]["areas"][areaIndex]["number"] = currNumber + 1;
+        }
+    }
+
+    ofstream groupOutput("./data/group_assessments.json");
+    groupOutput << groupAssessJson.dump();
 }

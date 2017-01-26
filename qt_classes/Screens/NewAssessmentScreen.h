@@ -133,6 +133,10 @@ private:
 
 	json child_;
 
+	//saving to the group
+	vector<int> groupIds;
+	map<string, int> indices;
+
 	vector<string> completedSa;
 	map<string, int> prevAgeRanges;
 };
