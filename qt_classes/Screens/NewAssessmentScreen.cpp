@@ -44,10 +44,6 @@ void NewAssessmentScreen::selectChild() {
 
     id = childSelection.currentIndex();
 
-    cout << name << endl;
-    cout << term << endl;
-    cout << year << endl;
-
     loadAssessment();
 
     //set the first area to be 0
@@ -233,7 +229,6 @@ void NewAssessmentScreen::setSubarea(int index) {
     subareaCb.setCurrentIndex(index);
 
     if (prev_assessment_json != json()) {
-        cout << prev_assessment_json << endl;
         if (prev_assessment_json["areas"][getIndex(areaIndex, subareaIndex)] != NULL) {
             int ar = prev_assessment_json["areas"][getIndex(areaIndex, subareaIndex)]["age_range"];
             setAgeRange(ar);
@@ -489,8 +484,6 @@ void NewAssessmentScreen::calculateGroupValues() {
     ifstream groupsFile("./data/groups.json", ifstream::binary);
     json groupJson = json::parse(groupsFile);
 
-    cout << groupJson << endl;
-
     ifstream groupAssessFile("./data/group_assessments.json", ifstream::binary);
     json groupAssessJson = json::parse(groupAssessFile);
 
@@ -542,7 +535,6 @@ void NewAssessmentScreen::calculateGroupValues() {
     //loop through all of the groups
     for (int groupId : groupIds) {
         json group = groupJson[groupId];
-        cout << groupAssessJson << endl;
 
         //find if there is currently an
         //object in the assessment json
@@ -569,7 +561,7 @@ void NewAssessmentScreen::calculateGroupValues() {
         int assessIndex;
         int i = 0;
 
-        for (json groupAssess : group["assessments"]) {
+        for (json groupAssess : groupAssessJson[groupId]["assessments"]) {
             string groupTerm = groupAssess["term"];
             string groupYear = groupAssess["year"];
 
@@ -615,6 +607,8 @@ void NewAssessmentScreen::calculateGroupValues() {
             }
 
             areaIndex = (areaFound) ? (areaIndex) : (i);
+            cout << "area index: " << areaIndex << endl;
+            cout << "assessment index: " << assessIndex << endl;
 
             //set the new value of the area in the groups assessment
             int currRange = 0;

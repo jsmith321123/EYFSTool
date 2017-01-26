@@ -25,6 +25,7 @@ public slots:
 	void chooseFile();
 	void nextArea();
 	void lastArea();
+	void returnToSelect();
 
 private:
 	//report selection

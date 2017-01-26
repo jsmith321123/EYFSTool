@@ -51,6 +51,23 @@ void LoadReportScreen::chooseFile() {
 
 			graphs.push_back(new_graph);
 			textEdits.push_back(new_text_edit);
+
+			//add text to the text boxes
+			int iROP = new_graph->gradient;
+			string sROP = to_string(iROP);
+
+			string comparison = (iROP == 1) ? ("the same as") :
+								(iROP > 1) ? ("higher than") : ("lower than");
+
+			string title = area["title"];
+
+			QString text = QString::fromStdString(
+				title + "\n" + 
+				"Rate of progression: " + sROP + ".\n" +
+				"This is " + comparison + " the national average." 
+				);
+
+			new_text_edit->setText(text);
 		}
 
 		for (int i = 0; i < graphs.size(); i++) {
@@ -59,12 +76,14 @@ void LoadReportScreen::chooseFile() {
 			QVBoxLayout *newVLayout = new QVBoxLayout();
 
 			QPushButton *newNButton = new QPushButton("Next");
+			QPushButton *returnButton = new QPushButton("Return");
 			QPushButton *newLButton = new QPushButton("Last");
 
 			newHLayout->addWidget(&graphs[i]->view);
 			newHLayout->addWidget(textEdits[i]);
 
 			newButtonLayout->addWidget(newLButton);
+			newButtonLayout->addWidget(returnButton);
 			newButtonLayout->addWidget(newNButton);
 
 			newVLayout->addLayout(newHLayout);
@@ -77,6 +96,7 @@ void LoadReportScreen::chooseFile() {
 
 			//connections
 			connect(newNButton, SIGNAL(clicked()), this, SLOT(nextArea()));
+			connect(returnButton, SIGNAL(clicked()), this, SLOT(returnToSelect()));
 			connect(newLButton, SIGNAL(clicked()), this, SLOT(lastArea()));
 		}
 
@@ -101,6 +121,23 @@ void LoadReportScreen::chooseFile() {
 
 			graphs.push_back(new_graph);
 			textEdits.push_back(new_text_edit);
+
+			//add text to the text boxes
+			int iROP = new_graph->gradient;
+			string sROP = to_string(iROP);
+
+			string comparison = (iROP == 1) ? ("the same as") :
+								(iROP > 1) ? ("higher than") : ("lower than");
+
+			string title = area["title"];
+
+			QString text = QString::fromStdString(
+				title + "\n" + 
+				"Rate of progression: " + sROP + ".\n" +
+				"This is " + comparison + " the national average." 
+				);
+
+			new_text_edit->setText(text);
 		}
 
 		for (int i = 0; i < graphs.size(); i++) {
@@ -109,12 +146,14 @@ void LoadReportScreen::chooseFile() {
 			QVBoxLayout *newVLayout = new QVBoxLayout();
 
 			QPushButton *newNButton = new QPushButton("Next");
+			QPushButton *returnButton = new QPushButton("Return");
 			QPushButton *newLButton = new QPushButton("Last");
 
 			newHLayout->addWidget(&graphs[i]->view);
 			newHLayout->addWidget(textEdits[i]);
 
 			newButtonLayout->addWidget(newLButton);
+			newButtonLayout->addWidget(returnButton);
 			newButtonLayout->addWidget(newNButton);
 
 			newVLayout->addLayout(newHLayout);
@@ -126,8 +165,8 @@ void LoadReportScreen::chooseFile() {
 			layout.addWidget(newWidget);
 
 			//connections
-
 			connect(newNButton, SIGNAL(clicked()), this, SLOT(nextArea()));
+			connect(returnButton, SIGNAL(clicked()), this, SLOT(returnToSelect()));
 			connect(newLButton, SIGNAL(clicked()), this, SLOT(lastArea()));
 		}
 
@@ -151,4 +190,14 @@ void LoadReportScreen::lastArea() {
 
 
 	layout.setCurrentIndex(nextIndex);
+}
+
+void LoadReportScreen::returnToSelect() {
+	layout.setCurrentIndex(0);
+	graphs.clear();
+	textEdits.clear();
+
+	for (int i = 1; i < layout.count(); i++) {
+		layout.removeWidget(layout.widget(1));
+	}
 }

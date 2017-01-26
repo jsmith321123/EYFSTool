@@ -41,6 +41,9 @@ pair<pair<int, int>, pair<int, int>> GraphGraphicsScene::rLine(vector<int> x_val
 	//get the values of a and b	
 	float b = Sxy/Sxx;
 	float a = mean (y_vals) - b * mean(x_vals);
+
+	//set the value of the gradient to "b"
+	gradient = b;
 	
 	//get the x coords for the start and end of the line
 	long int x1 = x_vals[0];
@@ -122,15 +125,18 @@ void GraphGraphicsScene::drawLines(vector<int> x, vector<int> y) {
     //generate the trendline with the test data
     pair<pair<int, int>, pair<int, int>>line = rLine(x, y);
 
-    //adding the test trendline to the graph
-    QGraphicsLineItem *trendline = addLine(line.first.first, line.first.second,
-        							line.second.first, line.second.second);
-
-    trendline->setPen(trendline_pen);
+    //add the national average line
+    addLine(0, 1, x[x.size() - 1], x[x.size() - 1] + 1);
 
     //plot the data lines for the test graph
     for (int i = 1; i < x.size(); i++) {
         QGraphicsLineItem *newLine = addLine(x[i-1], y[i-1], x[i], y[i]);
         newLine->setPen(line_pen);
-    }	
+    }
+
+    //adding the test trendline to the graph
+    QGraphicsLineItem *trendline = addLine(line.first.first, line.first.second,
+        								   line.second.first, line.second.second);
+
+    trendline->setPen(trendline_pen);
 }

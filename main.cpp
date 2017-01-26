@@ -17,6 +17,10 @@
 using namespace std;
 using json = nlohmann::json;
 
+//TODO
+//seems to be issues with the new assessments saving to groups
+//graph set title
+
 int main(int argc, char **argv) {
 	QApplication app (argc, argv);
 

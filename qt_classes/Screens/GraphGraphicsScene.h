@@ -17,6 +17,10 @@ public:
 	QGraphicsView view;
 	void drawLines(vector<int> x, vector<int> y);
 
+	void setTitle(QString title);
+
+	int gradient;
+
 private:
 	pair<pair<int, int>, pair<int, int>> rLine(vector<int> x_vals, vector<int> y_vals);
 	float getSxx(vector<int> x_vals);
