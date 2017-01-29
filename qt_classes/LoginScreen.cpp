@@ -43,8 +43,6 @@ bool LoginScreen::login() {
 	ifstream user_file("./data/users.json", ifstream::binary);
 	json user_json(user_file);
 	
-	cout << hash(password) << endl;
-
 	for (json curr_user : user_json) {
 	 	if (curr_user["user"] == json(user.toStdString())
 		    && curr_user["hashed_password"] == json(hash(password))
@@ -52,7 +50,10 @@ bool LoginScreen::login() {
 			al = curr_user["access_level"];
 			showMainWindow();
 		}
-	}	
+	}
+
+	wrongPassLabel.setStyleSheet("QLabel {color : red}");
+	wrongPassLabel.setText("Incorrect username or password.");
 	
 	return true;
 }

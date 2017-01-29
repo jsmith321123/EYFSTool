@@ -117,8 +117,8 @@ void CreateUserScreen::addUser() {
 		json new_user;
 
 		new_user["user"] = user.toStdString();
-		new_user["hashed_password"] = to_string(password);
-		new_user["access_level"] = access;
+		new_user["hashed_password"] = password;
+		new_user["access_level"] = stoi(access);
 		
 		user_json.push_back(new_user);
 
