@@ -96,5 +96,6 @@ void ViewChildScreen::updateList() {
                 items << QString::fromStdString(surname + ", " + forename);
         }
 
+        selectionBox.clear();
         selectionBox.insertItems(0, items);
 }

@@ -5,5 +5,5 @@ Screen::Screen() {
 }
 
 void Screen::updateList() {
-
+	cout << "screen" << endl;
 }
