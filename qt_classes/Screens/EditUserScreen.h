@@ -13,6 +13,7 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QStackedLayout>
 
 using json = nlohmann::json;
 
@@ -48,8 +49,11 @@ private:
 	QComboBox accessLevel;
 	QLabel *accessLevelLabel = new QLabel("New access level");
 
+	QVBoxLayout editLayout;
+
 	//main layout to allow switching between selection
 	//and editing
+	QStackedLayout layout;
 
 	void saveUser();
 };
