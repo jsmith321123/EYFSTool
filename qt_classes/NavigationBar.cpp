@@ -13,6 +13,7 @@ NavigationBar::NavigationBar(MainWindow* mw) {
 	layout.addWidget(createReportButton);
 	layout.addWidget(loadReportButton);
 	layout.addWidget(createUserButton);
+	layout.addWidget(editUserButton);
 
 	setLayout(&layout);
 
@@ -25,4 +26,5 @@ NavigationBar::NavigationBar(MainWindow* mw) {
 	connect(createReportButton, SIGNAL(clicked()), this, SLOT(setCreateReport()));
 	connect(newAssessButton, SIGNAL(clicked()), this, SLOT(setNewAssessment()));
 	connect(loadReportButton, SIGNAL(clicked()), this, SLOT(setLoadReport()));
+	connect(editUserButton, SIGNAL(clicked()), this, SLOT(setEditUser()));
 }

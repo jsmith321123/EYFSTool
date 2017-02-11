@@ -14,6 +14,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QStackedLayout>
+#include <QHBoxLayout>
 
 using json = nlohmann::json;
 
@@ -23,39 +24,55 @@ class EditUserScreen : public Screen {
 
 public:
 	EditUserScreen();
+	
+	void getUsers();
 
 public slots:
 	void selectUser();
 	void back();
 
+	void saveUser();
+	void deleteUser();
+
 private:
 	//user selection
-	QComboBox users;
-	QPushButton *selectButton = new QPushButton("select");
+	QComboBox usersCB;
+	QPushButton *selectButton = new QPushButton("Select");
 	QVBoxLayout selectLayout;
 
-	void getUsers();
+	QWidget selectWidget;
 
-	json users;
+
 	json selectedUser;
+	json usersJson;
 
 	//editing the user
-	QLineEdit password;
+	QLineEdit passwordLE;
 	QLabel *passwordLabel = new QLabel("New password");
+	QHBoxLayout passwordLayout;
 
-	QLineEdit passwordConfirm;
+	QLineEdit passwordConfirmLE;
 	QLabel *passwordConfirmLabel = new QLabel("Confirm password");
+	QHBoxLayout passwordConfirmLayout;
 
-	QComboBox accessLevel;
+	QComboBox accessLevelCB;
 	QLabel *accessLevelLabel = new QLabel("New access level");
+	QHBoxLayout accessLevelLayout;
+	QPushButton *deleteButton = new QPushButton("Delete");
+
+
+	QPushButton* saveButton = new QPushButton("Save");
 
 	QVBoxLayout editLayout;
+
+	QWidget editWidget;
 
 	//main layout to allow switching between selection
 	//and editing
 	QStackedLayout layout;
 
-	void saveUser();
+	//store the user's id
+	int id;
 };
 
 #endif //EDITUSERSCREEN_H

@@ -21,6 +21,7 @@
 #include "Screens/NewAssessmentScreen.h"
 #include "Screens/ViewChildScreen.h"
 #include "Screens/CreateUserScreen.h"
+#include "Screens/EditUserScreen.h"
 
 
 class MainWindow : public QMainWindow {
@@ -34,7 +35,7 @@ public:
 	int accessLevel = 2;
 
 	int currentIndex = 1;
-	Screen* screens [6];
+	Screen* screens [7];
 
 private:
 

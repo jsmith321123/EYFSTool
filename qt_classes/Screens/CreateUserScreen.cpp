@@ -103,6 +103,12 @@ void CreateUserScreen::addUser() {
 		reason = "you do not possess the permissions to add a user";
 	}
 
+	//check if no password has been added
+	if (password == 0) {
+		succeded = false;
+		reason = "no password given";
+	}
+
 	cout << "al: " << al_ << endl;
 
 	//if the password and user name are valid

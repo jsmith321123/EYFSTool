@@ -11,6 +11,7 @@ MainWindow::MainWindow(int al) {
 	screens[3] = new CreateReportContainerScreen();
 	screens[4] = new NewAssessmentScreen();
 	screens[5] = new LoadReportScreen();
+	screens[6] = new EditUserScreen();
 
 	for (Screen* s : screens) {
 		mainScreen.addWidget(s);
@@ -23,8 +24,6 @@ MainWindow::MainWindow(int al) {
 
 	centralWidget.setLayout(&layout);
 
-	//centralWidget.setFixedSize(500, 300);
-
 	setCentralWidget(&centralWidget);
 }
 
@@ -36,7 +35,7 @@ void MainWindow::changeScreen(int index) {
 
 void NavigationBar::setAddChild() {
 	mw_->changeScreen(0);
-}
+}	
 
 void NavigationBar::setViewChild() {
 	mw_->changeScreen(1);
@@ -57,4 +56,9 @@ void NavigationBar::setNewAssessment() {
 
 void NavigationBar::setLoadReport() {
 	mw_->changeScreen(5);
+}
+
+void NavigationBar::setEditUser() {
+	mw_->changeScreen(6);
+	static_cast<EditUserScreen*>(mw_->screens[6])->getUsers();
 }
