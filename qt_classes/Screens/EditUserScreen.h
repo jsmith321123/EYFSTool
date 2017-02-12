@@ -25,7 +25,7 @@ class EditUserScreen : public Screen {
 public:
 	EditUserScreen();
 	
-	void getUsers();
+	void updateList();
 
 public slots:
 	void selectUser();

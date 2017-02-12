@@ -21,7 +21,7 @@ class AddChildScreen : public Screen {
 	Q_OBJECT
 
 public:
-	AddChildScreen();
+	AddChildScreen(int al);
 
 public slots:
 	void addChild();
@@ -59,9 +59,13 @@ private:
 	QLabel eyppLabel;
 	QHBoxLayout eyppLayout;
 
+	QLabel notification;
+
 	QPushButton submit;
 
 	QVBoxLayout layout;
+
+	int al_;
 };
 
 #endif //ADDCHILDSCREEN_H

@@ -5,7 +5,7 @@
 
 
 MainWindow::MainWindow(int al) {
-	screens[0] = new AddChildScreen();
+	screens[0] = new AddChildScreen(al);
 	screens[1] = new ViewChildScreen();
 	screens[2] = new CreateUserScreen(al);
 	screens[3] = new CreateReportContainerScreen();
@@ -60,5 +60,5 @@ void NavigationBar::setLoadReport() {
 
 void NavigationBar::setEditUser() {
 	mw_->changeScreen(6);
-	static_cast<EditUserScreen*>(mw_->screens[6])->getUsers();
+	mw_->screens[6]->updateList();
 }

@@ -15,7 +15,7 @@ using json = nlohmann::json;
 
 EditUserScreen::EditUserScreen() {
 	//add all of the user selection components
-	getUsers();
+	updateList();
 
 	selectLayout.addWidget(&usersCB);
 	selectLayout.addWidget(selectButton);
@@ -59,7 +59,7 @@ EditUserScreen::EditUserScreen() {
 	connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteUser()));
 }
 
-void EditUserScreen::getUsers() {
+void EditUserScreen::updateList() {
 	ifstream usersFile("./data/users.json");
 	usersJson = json::parse(usersFile);
 
@@ -129,5 +129,5 @@ void EditUserScreen::deleteUser() {
 		layout.setCurrentIndex(0);
   	}
 
-  	getUsers();
+  	updateList();
 }

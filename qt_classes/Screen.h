@@ -14,7 +14,7 @@ Q_OBJECT
 
 public:
 	Screen();
-	void updateList();
+	virtual void updateList();
 
 	string name;
 	int id;

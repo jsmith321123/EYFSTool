@@ -9,6 +9,8 @@
 #include <QString>
 #include <QStringList>
 
+#include <regex>
+
 #include "./MainWindow.h"
 
 using namespace std;
@@ -66,7 +68,7 @@ CreateUserScreen::CreateUserScreen(int al) {
 void CreateUserScreen::addUser() {
 	//bool and string that will help give
 	//feedback to the user
-	bool succeded = false;
+	bool succeded = true;
 	QString reason = "";
 
 	//initialising the variable for the hashed_password
@@ -109,12 +111,19 @@ void CreateUserScreen::addUser() {
 		reason = "no password given";
 	}
 
+	//check if the password fits the requirements
+	regex newRegex = regex("^(?=.*[a-z])(?=.*\\d).+$");
+	if (!(regex_match(pass1LineEdit.text().toStdString(), newRegex) && pass1LineEdit.text().length() > 7)) {
+		succeded = false;
+		reason = "password does not fit the requirements, must have 8 characters and at least 1 digit";
+	}
+
 	cout << "al: " << al_ << endl;
 
 	//if the password and user name are valid
 	//adds the new user to the table as long
 	//as they dont already exist
-	if (newUser && password != 0 && user != "" && al_ == 0) {
+	if (succeded) {
 		ifstream user_file("./data/users.json", ifstream::binary);
 		json user_json(user_file);
 		

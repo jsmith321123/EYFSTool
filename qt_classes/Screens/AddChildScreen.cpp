@@ -9,7 +9,9 @@
 using namespace std;
 using json = nlohmann::json;
 
-AddChildScreen::AddChildScreen() {
+AddChildScreen::AddChildScreen(int al) {
+	al_ == al;
+
 	//settings for the date edit
 	dobDateEdit.setCalendarPopup(true);
 
@@ -54,6 +56,7 @@ AddChildScreen::AddChildScreen() {
 	layout.addLayout(&eyppLayout);
 
 	layout.addWidget(&submit);
+	layout.addWidget(&notification);
 
 	layout.setAlignment(Qt::AlignTop);
 
@@ -97,10 +100,23 @@ void AddChildScreen::addChild () {
 	ifstream file("./data/children.json");
 	json current = json(file);
 	
-	//set the id of the new child
-	new_child["id"] = current.size();
 
-	current.push_back(new_child);
+	//only add the child if the user has
+	//the correct permissions
+	if (al_ > 2 && forename != "" && surname != "") {
+		//set the id of the new child
+		new_child["id"] = current.size();
+	
+		current.push_back(new_child);
+
+		//notify the user that the child
+		//has been added
+		notification.setStyleSheet("QLabel {color : green}");
+		notification.setText("Child added!");
+	} else {
+		notification.setStyleSheet("QLabel {color : red}");
+		notification.setText("Child not added.");
+	}
 
 	//rewrite the file with the new json object	
 	ofstream output("./data/children.json");
