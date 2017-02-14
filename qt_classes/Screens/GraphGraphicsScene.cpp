@@ -8,12 +8,11 @@ GraphGraphicsScene::GraphGraphicsScene() {
 	//correct scale and view window and
 	//assign this scene to the view
 	view.setScene(this);
-	view.setSceneRect(-1, -1, 12, 12);
-	view.scale(15, -15);
+	view.setSceneRect(-scale, scale, 12 * scale, 12 * -scale);
 	
 	//add the axis lines
-	QGraphicsLineItem *x_axis = addLine(0, 0, 10, 0);
-	QGraphicsLineItem *y_axis = addLine(0, 0, 0, 10);
+	QGraphicsLineItem *x_axis = addLine(0, 0, 10 * scale, 0);
+	QGraphicsLineItem *y_axis = addLine(0, 0, 0, 7.5 * -scale);
 	
 	//set the colours of the data lines
 	//and the axis lines
@@ -22,6 +21,18 @@ GraphGraphicsScene::GraphGraphicsScene() {
 	
 	x_axis->setPen(axis_pen);
 	y_axis->setPen(axis_pen);
+
+	//set axis labels along the y-axis
+	vector<QString> ranges = {"0-11", "8-20", "16-26", "22-36", "30-50", "40-60+"};
+
+	QGraphicsTextItem* text;
+
+	for (int i; i < ranges.size(); i++) {
+		text = addText(ranges[i]);
+		text->adjustSize();
+		text->setX(-2.5 * scale);
+		text->setY((i + 2) * -scale + scale/2);
+	}
 }
 
 pair<pair<int, int>, pair<int, int>> GraphGraphicsScene::rLine(vector<int> x_vals, 
@@ -126,17 +137,17 @@ void GraphGraphicsScene::drawLines(vector<int> x, vector<int> y) {
     pair<pair<int, int>, pair<int, int>>line = rLine(x, y);
 
     //add the national average line
-    addLine(0, 1, x[x.size() - 1], x[x.size() - 1] + 1);
+    addLine(0, -scale, x[x.size() - 1] * scale, (x[x.size() - 1] + 1) * -scale);
 
     //plot the data lines for the test graph
     for (int i = 1; i < x.size(); i++) {
-        QGraphicsLineItem *newLine = addLine(x[i-1], y[i-1], x[i], y[i]);
+        QGraphicsLineItem *newLine = addLine(x[i-1] * scale, y[i-1] * -scale, x[i] * scale, y[i] * -scale);
         newLine->setPen(line_pen);
     }
 
     //adding the test trendline to the graph
-    QGraphicsLineItem *trendline = addLine(line.first.first, line.first.second,
-        								   line.second.first, line.second.second);
+    QGraphicsLineItem *trendline = addLine(line.first.first * scale, line.first.second * -scale,
+        								   line.second.first * scale, line.second.second * -scale);
 
     trendline->setPen(trendline_pen);
 }

@@ -23,7 +23,7 @@ class EditUserScreen : public Screen {
 	Q_OBJECT
 
 public:
-	EditUserScreen();
+	EditUserScreen(int al);
 	
 	void updateList();
 

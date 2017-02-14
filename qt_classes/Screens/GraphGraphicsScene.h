@@ -34,7 +34,7 @@ private:
 	QGraphicsLineItem* x_axis;
 	QGraphicsLineItem* y_axis;
 
-	QGraphicsTextItem labels[10000];
+	int scale = 15;
 };
 
 #endif

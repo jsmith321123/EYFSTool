@@ -6,12 +6,19 @@
 
 MainWindow::MainWindow(int al) {
 	screens[0] = new AddChildScreen(al);
+	cout << 0 << endl;
 	screens[1] = new ViewChildScreen();
+	cout << 1 << endl;
 	screens[2] = new CreateUserScreen(al);
-	screens[3] = new CreateReportContainerScreen();
-	screens[4] = new NewAssessmentScreen();
+	cout << 2 << endl;
+	screens[3] = new CreateReportContainerScreen(al);
+	cout << 3 << endl;
+	screens[4] = new NewAssessmentScreen(al);
+	cout << 4 << endl;
 	screens[5] = new LoadReportScreen();
-	screens[6] = new EditUserScreen();
+	cout << 5 << endl;
+	screens[6] = new EditUserScreen(al);
+	cout << 6 << endl;
 
 	for (Screen* s : screens) {
 		mainScreen.addWidget(s);

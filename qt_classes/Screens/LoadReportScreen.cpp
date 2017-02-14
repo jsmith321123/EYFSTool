@@ -52,7 +52,12 @@ void LoadReportScreen::chooseFile() {
 			graphs.push_back(new_graph);
 			textEdits.push_back(new_text_edit);
 
-			//add text to the text boxes
+			/*
+			 *	Add text to the boxes
+			 */
+
+			//calculate how the child's progression
+			//compares to the national average
 			int iROP = new_graph->gradient;
 			string sROP = to_string(iROP);
 

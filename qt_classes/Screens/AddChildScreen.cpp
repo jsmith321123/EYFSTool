@@ -103,7 +103,7 @@ void AddChildScreen::addChild () {
 
 	//only add the child if the user has
 	//the correct permissions
-	if (al_ > 2 && forename != "" && surname != "") {
+	if (al_ < 1 && forename != "" && surname != "") {
 		//set the id of the new child
 		new_child["id"] = current.size();
 	

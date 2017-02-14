@@ -17,7 +17,7 @@ class CreateReportScreen : public Screen {
 Q_OBJECT;
 
 public:
-	CreateReportScreen(string type);
+	CreateReportScreen(string type, int al);
 
 	void setIndividual();
 	void setGroup();
@@ -31,8 +31,11 @@ public slots:
 	void createReport();
 
 	void newGroup();
+	void getChildInfo();
 
 private:
+	int al_;
+
 	void getChildren();
 	void getTermYear();
 
@@ -58,7 +61,7 @@ private:
 
 	QPushButton addGroupButton;
 
-	int id;
+	int id = 0;
 
 	vector<QString> ranges = {"0-11 months", "8-20 months", "16-26 months",
 							  "22-36 months", "30-50 months", "40-60+ months"};

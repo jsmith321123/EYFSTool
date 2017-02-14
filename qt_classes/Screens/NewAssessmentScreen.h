@@ -26,7 +26,7 @@ class NewAssessmentScreen : public Screen {
 Q_OBJECT
 
 public:
-	NewAssessmentScreen();
+	NewAssessmentScreen(int al);
 	void updateList();
 	void getAreas();
 	void calculateGroupValues();
@@ -51,6 +51,8 @@ public slots:
 	void saveAssessment();
 
 private:
+	int al_;
+
 	void setArea(int index);
 	void setSubarea(int index);
 

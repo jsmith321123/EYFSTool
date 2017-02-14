@@ -13,7 +13,9 @@
 using namespace std;
 using json = nlohmann::json;
 
-EditUserScreen::EditUserScreen() {
+EditUserScreen::EditUserScreen(int al) {
+	al_ = al;
+
 	//add all of the user selection components
 	updateList();
 
@@ -75,6 +77,12 @@ void EditUserScreen::updateList() {
 }
 
 void EditUserScreen::selectUser() {
+	if (al_ > 1) {
+		QLabel* notification = new QLabel("You do not have permissions to do that");
+		selectLayout.addWidget(notification);
+		return;
+	}
+
 	layout.setCurrentIndex(1);
 	id = usersCB.currentIndex();
 }
@@ -112,7 +120,8 @@ void EditUserScreen::deleteUser() {
 
 	for (int i; i < usersJson.size(); i++) {
 		if (i != id) {
-			usersJson[i]["id"] = i - 1;
+			if (i > id)
+				usersJson[i]["id"] = i - 1;
 			newUsersJson.push_back(usersJson[i]);
 		}
 	}

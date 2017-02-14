@@ -42,6 +42,8 @@ bool LoginScreen::login() {
 	
 	ifstream user_file("./data/users.json", ifstream::binary);
 	json user_json(user_file);
+
+	cout << hash(password) << endl;
 	
 	for (json curr_user : user_json) {
 	 	if (curr_user["user"] == json(user.toStdString())

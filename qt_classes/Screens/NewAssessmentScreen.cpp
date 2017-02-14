@@ -12,7 +12,9 @@
 using namespace std;
 using json = nlohmann::json;
 
-NewAssessmentScreen::NewAssessmentScreen () {
+NewAssessmentScreen::NewAssessmentScreen (int al) {
+    al_ = al;
+
     createSelectLayout();
 
     setLayout(&layout);
@@ -36,6 +38,13 @@ NewAssessmentScreen::NewAssessmentScreen () {
 }
 
 void NewAssessmentScreen::selectChild() {
+    if (al_ > 1) {
+	QLabel* notification = new QLabel("You do not have the permissions to do this");
+	notification->setStyleSheet("QLabel {color : red}");
+	selectionLayout.addWidget(notification);
+	return;
+    }
+
     layout.setCurrentIndex(1);
 
     name = childSelection.currentText().toStdString();

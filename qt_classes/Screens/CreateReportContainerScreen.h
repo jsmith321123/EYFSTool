@@ -8,16 +8,12 @@
 
 class CreateReportContainerScreen : public Screen{
 public:
-	CreateReportContainerScreen();
+	CreateReportContainerScreen(int al);
 
 public slots:
 
 private:
-	CreateReportScreen* screens[3] = {
-		new CreateReportScreen("individual"),
-		new CreateReportScreen("group"),
-		new CreateReportScreen("learning area")
-	};
+	CreateReportScreen* screens[3];
 
 	QTabWidget tabs;
 

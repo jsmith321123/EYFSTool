@@ -9,7 +9,9 @@
 using namespace std;
 using json = nlohmann::json;
 
-CreateReportScreen::CreateReportScreen(string type) {
+CreateReportScreen::CreateReportScreen(string type, int al) {
+	al_ = al;
+
 	type_ = type;
 
 	if (type_ == "individual") {
@@ -24,9 +26,12 @@ CreateReportScreen::CreateReportScreen(string type) {
 
 	getTermYear();
 
+	getChildInfo();
+
 	//connections
 	connect(&submitButton, SIGNAL(clicked()), this, SLOT(createReport()));
 	connect(&addGroupButton, SIGNAL(clicked()), this, SLOT(newGroup()));
+	connect(&select, SIGNAL(currentIndexChanged(int)), this, SLOT(getChildInfo()));
 }
 
 void CreateReportScreen::setIndividual() {
@@ -148,6 +153,12 @@ void CreateReportScreen::getTermYear() {
 }
 
 void CreateReportScreen::createReport() {
+	if (al_ > 1) {
+		QLabel* notification = new QLabel("You do not have permissions to do that");
+		layout.addWidget(notification);
+		return;
+	}
+
 	//get the start/end terms from the comboboxes
 	string begYear = startYear.currentText().toStdString();
 	string finYear = endYear.currentText().toStdString();
@@ -437,4 +448,33 @@ void CreateReportScreen::getChildren() {
 void CreateReportScreen::newGroup() {
     NewGroupDialog *dialog = new NewGroupDialog();
     dialog->show();
+}
+
+void CreateReportScreen::getChildInfo() {
+	id = select.currentIndex();
+
+	if (id < 0) {
+		return;
+	}
+
+	ifstream child_file("./data/children.json", ifstream::binary);
+    json child_json = json::parse(child_file);
+
+    json curr_child = child_json[id];
+    //get all of the child's information
+	string name = "Name: " + curr_child["surname"].dump() + ", " 
+			+ curr_child["forename"].dump();
+	string knownAs = "Known as: " + curr_child["knownAs"].dump();
+	string dob = "Date of birth: " + curr_child["dob"].dump();
+	string neg = "NEG: " + string(((curr_child["neg"].dump() == "1") ? ("Yes") : ("No")));
+	string f2yo = "F2YO: " + string(((curr_child["f2yo"].dump() == "1") ? ("Yes") : ("No")));
+	string eypp = "EYPP: " + string(((curr_child["eypp"].dump() == "1") ? ("Yes") : ("No")));
+
+	QString text = QString::fromStdString(
+			name + "\n" + knownAs + "\n" +
+			dob + "\n" + neg + "\n" + 
+			f2yo + "\n" + eypp
+		);
+
+	detailTextEdit.setText(text);
 }
