@@ -45,7 +45,13 @@ private:
 	QPushButton nextButton;
 	QPushButton lastButton;
 
-	QStackedLayout layout;
+	QWidget laWidget;
+	QVBoxLayout laLayout;
+
+	QTextEdit laEdit;
+	QPushButton* laBack = new QPushButton("Back");
+
+	QStackedLayout *layout = new QStackedLayout();
 
 	string type;
 };

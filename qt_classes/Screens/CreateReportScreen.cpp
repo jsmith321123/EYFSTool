@@ -343,6 +343,7 @@ void CreateReportScreen::createLAReport() {
 
 			bool inRange = false;
 
+			//check if the assessment is in range
 			if (stoi(begYear) < stoi(year) && stoi(year) < stoi(finYear)) {
 				inRange = true;
 			} else if(stoi(begYear) == stoi(year)
