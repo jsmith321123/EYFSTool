@@ -99,6 +99,13 @@ void AddChildScreen::addChild () {
 	//get the existing json
 	ifstream file("./data/children.json");
 	json current = json(file);
+
+	//failure reasons
+	string alFail = "You do not have the permissions to do this";
+	string foreFail = "You have not entered a forename";
+	string surFail = "You have not entered a surname";
+
+	string reason = (al_ > 0) ? (alFail) : (forename == "") ? (foreFail) : (surFail);
 	
 
 	//only add the child if the user has
@@ -115,7 +122,7 @@ void AddChildScreen::addChild () {
 		notification.setText("Child added!");
 	} else {
 		notification.setStyleSheet("QLabel {color : red}");
-		notification.setText("Child not added.");
+		notification.setText("Child not added. Reason: " + QString::fromStdString(reason));
 	}
 
 	//rewrite the file with the new json object	
