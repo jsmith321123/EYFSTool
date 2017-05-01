@@ -164,7 +164,7 @@ void CreateUserScreen::addUser() {
 
 bool CreateUserScreen::userExists(QString user_name) {
 	ifstream user_file("./../data/users.json", ifstream::binary);
-	json user_json(user_file);
+	json user_json = json::parse(user_file);
 	
 	for (json user : user_json) {
 		if (user["user"] == json(user_name.toStdString())) {

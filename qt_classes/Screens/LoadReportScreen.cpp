@@ -5,11 +5,13 @@
 #include <QFileDialog>
 #include <QScrollArea>
 #include <QTextEdit>
+#include <QLabel>
 
 LoadReportScreen::LoadReportScreen() {
 	//setup the selection screen
 	selectFile.setText("Select report");
 	selectLayout.addWidget(&selectFile);
+	selectLayout.addWidget(&feedbackLabel);
 
 	selectWidget.setLayout(&selectLayout);
 	layout->addWidget(&selectWidget);
@@ -22,24 +24,33 @@ LoadReportScreen::LoadReportScreen() {
 }
 
 void LoadReportScreen::chooseFile() {
-	QString filename = QFileDialog::getOpenFileName();
-	cout << filename.toStdString() << endl;
+	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), "./../reports");
 
-	ifstream file(filename.toStdString(), ifstream::binary);
-	json report = json::parse(file);
-	file.close();
+	json report;
+ 
+	string filen = filename.toStdString();
+
+	if (filen.length() > 3 && filen.substr(filen.length() - 3, filen.length()) == "rpt") {
+		ifstream file(filen, ifstream::binary);
+		report = json::parse(file);
+		file.close();
+	} else {
+		return;
+	}
 
 	type = report["type"];
 
 	cout << report << endl;
 
 	/*
+
 		Displays the reports, individual and group
 		reports will be a sequence of screens with
 		a text box and graph, where as the learning
 		area reports will just be a text box,
 		individual reports will also give a brief 
 		description of progression/regression
+
 	 */
 
 	if (type == "individual") {

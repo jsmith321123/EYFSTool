@@ -93,20 +93,7 @@ void CreateReportScreen::setGroup() {
 
 	setLayout(&layout);
 
-	//get the list of groups
-	ifstream groupsFile("./../data/groups.json", ifstream::binary);
-	json groupsJson = json::parse(groupsFile);
-	groupsFile.close();
-
-	QStringList groups;
-
-	for (json group : groupsJson) {
-		string groupName = group["name"];
-
-		groups << QString::fromStdString(groupName);
-	}
-
-	select.insertItems(0, groups);
+	updateGroups();
 }
 
 void CreateReportScreen::setLearningArea() {
@@ -301,9 +288,9 @@ void CreateReportScreen::createReport() {
 
     //create the file name
 	string file_name = select.currentText().toStdString() + " " + date + " " + 
-	begTerm + "_" + begYear + "_to_" + finTerm + "_" + finYear +".json";
+	begTerm + "_" + begYear + "_to_" + finTerm + "_" + finYear +".rpt";
 
-	ofstream output("./reports/" + file_name);
+	ofstream output("./../reports/" + file_name);
 	output << report.dump();
 }
 
@@ -423,9 +410,9 @@ void CreateReportScreen::createLAReport() {
 
 	//create the file name
 	string file_name = "Learning_Areas_" + date + "_" + begTerm + 
-	"_" + begYear + "_to_" + finTerm + "_" + finYear + ".json";
+	"_" + begYear + "_to_" + finTerm + "_" + finYear + ".rpt";
 
-	ofstream output("./reports/" + file_name);
+	ofstream output("./../reports/" + file_name);
 	output << report.dump();
 }
 
@@ -480,4 +467,22 @@ void CreateReportScreen::getChildInfo() {
 		);
 
 	detailTextEdit.setText(text);
+}
+
+void CreateReportScreen::updateGroups() {
+	//get list of groups
+	ifstream groups_file("./../data/groups.json", ifstream::binary);
+	json groups_json(groups_file);
+	groups_file.close();
+
+	QStringList groups;
+
+	for (json group : groups_json) {
+		string groupName = group["name"];
+
+		groups << QString::fromStdString(groupName);
+	}
+
+	select.clear();
+	select.insertItems(0, groups);
 }

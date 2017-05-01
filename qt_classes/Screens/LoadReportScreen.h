@@ -12,6 +12,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QStackedLayout>
+#include <QLabel>
 
 using namespace std;
 using json = nlohmann::json;
@@ -53,6 +54,8 @@ private:
 	QPushButton* laBack = new QPushButton("Back");
 
 	QStackedLayout *layout = new QStackedLayout();
+
+	QLabel feedbackLabel;
 
 	string type;
 };

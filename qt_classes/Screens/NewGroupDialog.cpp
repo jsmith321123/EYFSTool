@@ -224,8 +224,14 @@ void NewGroupDialog::createGroup() {
 	ofstream outputGroups("./../data/groups.json");
 	outputGroups << groupsJson.dump();
 
+	outputGroups.close();
+
 	ofstream outputAssess("./../data/group_assessments.json");
 	outputAssess << assessments.dump();
 
+	outputAssess.close();
+
 	crs_->updateGroups();
+
+	hide();
 }
