@@ -8,7 +8,7 @@
 					{
 						"text": [
 							"Enjoys the company of others and seeks contact with others from birth.",
-							"Gazes at faces and copies facial movements. e.g. sticking outtongue, opening mouth and widening eyes. ",
+							"Gazes at faces and copies facial movements. e.g. sticking out tongue, opening mouth and widening eyes. ",
 							"Responds when talked to, for example, moves arms and legs, changes facial expression, moves body and makes mouth movements.",
 							"Recognises and is most responsive to main carer's voice: face brightens, activity increases when familiar carer appears.",
 							"Responds to what carer is paying attention to, e.g. following",
@@ -16,22 +16,43 @@
 						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Seeks to gain attention in a variety of ways, drawing others into social interaction.",
+							"Builds relationships with special people.",
+							"Is wary of unfamiliar people.",
+							"Interacts with others and explores new situations when supported by familiar person.",
+							"Shows interest in the activities of others and responds differently to children and adults, e.g. may be more interested in watching children than adults or may pay more attention when children talk to them."
+						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Plays alongside others.",
+							"Uses a familiar adult as a secure base from which to explore independently in new environments, e.g. ventures away to play and interact with others, but returns for a cuddle or reassurance if becomes anxious.",
+							"Plays cooperatively with a familiar adult, e.g. rolling a ball back and forth."
+						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Interested in others’ play and starting to join in.",
+							"Seeks out others to share experiences.",
+							"Shows affection and concern for people who are special to them.",
+							"May form a special friendship with another child."
+						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Can play in a group, extending and elaborating play ideas, e.g. building up a role-play activity with other children.",
+							"Initiates play, offering cues to peers to join them.",
+							"Keeps play going by responding to what others are saying or doing.",
+							"Demonstrates friendly behaviour, initiating conversations and forming good relationships with peers and familiar adults."
+						]
 					},
 					{
-						"text": ""
-					},
-					{
-						"text": ""
+						"text": [
+							"Initiates conversations, attends to and takes account of what others say.",
+							"Explains own knowledge and understanding, and asks appropriate questions of others. ",
+							"Takes steps to resolve conflicts with other children, e.g. finding a compromise."
+						]
 					}
 				]
 			},
@@ -39,25 +60,46 @@
 				"title": "Self-confidence and self-awareness",
 				"age-ranges": [
 					{
-						"text": ""
+						"text": [
+							"Laughs and gurgles, e.g. shows pleasure at being tickled and other physical interactions.",
+							"Uses voice, gesture, eye contact and facial expression to make contact with people and keep their attention."
+						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Enjoys finding own nose, eyes or tummy as part of naming games.",
+							"Learns that own voice and actions have effects on others.",
+							"Uses pointing with eye gaze to make requests, and to share an interest.",
+							"Engages other person to help achieve a goal, e.g. to get an object out of reach."
+						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Explores new toys and environments, but ‘checks in’ regularly with familiar adult as and when needed.",
+							"Gradually able to engage in pretend play with toys (supports child to understand their own thinking may be different from others).",
+							"Demonstrates sense of self as an individual, e.g. wants to do things independently, says “No” to adult."
+						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Separates from main carer with support and encouragement from a familiar adult.",
+							"Expresses own preferences and interests."
+						]
 					},
 					{
-						"text": ""
+						"text": [
+							"Can select and use activities and resources with help.",
+							"Welcomes and values praise for what they have done.",
+							"Is more outgoing towards unfamiliar people and more confident in new social situations.",
+							"Confident to talk to other children when playing, and will communicate freely about own home and community.",
+							"Shows confidence in asking adults for help."
+						]
 					},
 					{
-						"text": ""
-					},
-					{
-						"text": ""
+						"text": [
+							"Confident to speak to others about own needs, wants, interests and opinions.",
+							"Can describe self in positive terms and talk about abilities."
+						]
 					}
 				]
 			},
