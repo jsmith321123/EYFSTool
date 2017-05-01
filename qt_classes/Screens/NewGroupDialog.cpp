@@ -7,7 +7,9 @@
 using namespace std;
 using json = nlohmann::json;
 
-NewGroupDialog::NewGroupDialog() {
+NewGroupDialog::NewGroupDialog(Screen *crs) {
+	crs_ = crs;
+
 	groupNameLabel.setText("Group name:");
 	groupNameLayout.addWidget(&groupNameLabel);
 	groupNameLayout.addWidget(&groupNameEdit);
@@ -63,7 +65,7 @@ void NewGroupDialog::createGroup() {
 	 */
 
 	//load the json containing the current groups
-	ifstream groupsFile("./data/groups.json", ifstream::binary);
+	ifstream groupsFile("./../data/groups.json", ifstream::binary);
 	json groupsJson = json::parse(groupsFile);
 	groupsFile.close();
 
@@ -93,12 +95,12 @@ void NewGroupDialog::createGroup() {
 	 */
 
 	//load all existing assessments
-	ifstream assessmentsFile("./data/assessments.json", ifstream::binary);
+	ifstream assessmentsFile("./../data/assessments.json", ifstream::binary);
 	json assessments = json::parse(assessmentsFile);
 	assessmentsFile.close();
 
 	//load all of the child info
-	ifstream childrenFile("./data/children.json", ifstream::binary);
+	ifstream childrenFile("./../data/children.json", ifstream::binary);
 	json children = json::parse(childrenFile);
 	childrenFile.close();
 
@@ -219,9 +221,11 @@ void NewGroupDialog::createGroup() {
 	cout << "groups: " << groupsJson << endl;
 	cout << "assessments: " << assessments << endl;
 
-	ofstream outputGroups("./data/groups.json");
+	ofstream outputGroups("./../data/groups.json");
 	outputGroups << groupsJson.dump();
 
-	ofstream outputAssess("./data/group_assessments.json");
+	ofstream outputAssess("./../data/group_assessments.json");
 	outputAssess << assessments.dump();
+
+	crs_->updateGroups();
 }

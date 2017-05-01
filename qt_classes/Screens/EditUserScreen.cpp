@@ -62,7 +62,7 @@ EditUserScreen::EditUserScreen(int al) {
 }
 
 void EditUserScreen::updateList() {
-	ifstream usersFile("./data/users.json");
+	ifstream usersFile("./../data/users.json");
 	usersJson = json::parse(usersFile);
 
 	QStringList users;
@@ -132,7 +132,7 @@ void EditUserScreen::deleteUser() {
   	if (reply == QMessageBox::Yes) {
   		usersJson = newUsersJson;
 
-    	ofstream output("./data/users.json");
+    	ofstream output("./../data/users.json");
 		output << usersJson.dump();
 
 		layout.setCurrentIndex(0);

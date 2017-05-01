@@ -1,3 +1,4 @@
+#define __USE_MINGW_ANSI_STDIO 0
 #include "CreateReportScreen.h"
 
 #include <fstream>
@@ -93,7 +94,7 @@ void CreateReportScreen::setGroup() {
 	setLayout(&layout);
 
 	//get the list of groups
-	ifstream groupsFile("./data/groups.json", ifstream::binary);
+	ifstream groupsFile("./../data/groups.json", ifstream::binary);
 	json groupsJson = json::parse(groupsFile);
 	groupsFile.close();
 
@@ -101,6 +102,24 @@ void CreateReportScreen::setGroup() {
 
 	for (json group : groupsJson) {
 		string groupName = group["name"];
+
+		groups << QString::fromStdString(groupName);
+	}
+
+	select.insertItems(0, groups);
+}
+
+void CreateReportScreen::updateGroups() {
+	//get the list of groups
+	ifstream grp("./../data/groups.json", ifstream::binary);
+	json grpJson = json::parse(grp);
+	grp.close();
+
+	QStringList groups;
+
+	for (json group : grpJson) {
+		string groupName = group["name"];
+
 		groups << QString::fromStdString(groupName);
 	}
 
@@ -186,7 +205,7 @@ void CreateReportScreen::createReport() {
 
 	string assFileName = (type_ == "group") ? ("group_assessments.json") : ("assessments.json");
 
-	ifstream assessmentsFile("./data/" + assFileName, ifstream::binary);
+	ifstream assessmentsFile("./../data/" + assFileName, ifstream::binary);
 	json assessments = json::parse(assessmentsFile);
 	assessmentsFile.close();
 
@@ -317,7 +336,7 @@ void CreateReportScreen::createLAReport() {
 	int finTIndex = endTerm.currentIndex();
 
 	//read the assessments file
-	ifstream assessmentsFile("./data/assessments.json", ifstream::binary);
+	ifstream assessmentsFile("./../data/assessments.json", ifstream::binary);
 	json assessments = json::parse(assessmentsFile);
 	assessmentsFile.close();
 
@@ -430,7 +449,7 @@ void CreateReportScreen::createLAReport() {
 void CreateReportScreen::getChildren() {
 	QStringList items;
 
-	ifstream child_file("./data/children.json", ifstream::binary);
+	ifstream child_file("./../data/children.json", ifstream::binary);
     json child_json(child_file);
 
 	for (json child : child_json) {
@@ -447,7 +466,7 @@ void CreateReportScreen::getChildren() {
 }
 
 void CreateReportScreen::newGroup() {
-    NewGroupDialog *dialog = new NewGroupDialog();
+    NewGroupDialog *dialog = new NewGroupDialog(this);
     dialog->show();
 }
 
@@ -458,7 +477,7 @@ void CreateReportScreen::getChildInfo() {
 		return;
 	}
 
-	ifstream child_file("./data/children.json", ifstream::binary);
+	ifstream child_file("./../data/children.json", ifstream::binary);
     json child_json = json::parse(child_file);
 
     json curr_child = child_json[id];

@@ -1,7 +1,7 @@
 #ifndef CREATEREPORTCONTAINERSCREEN_H
 #define CREATEREPORTCONTAINERSCREEN_H
 
-#include "./Screen.h"
+#include "./../Screen.h"
 #include "CreateReportScreen.h"
 #include <QTabWidget>
 #include <QVBoxLayout>

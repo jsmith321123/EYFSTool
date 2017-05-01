@@ -15,6 +15,7 @@ Q_OBJECT
 public:
 	Screen();
 	virtual void updateList();
+	virtual void updateGroups();
 
 	string name;
 	int id;

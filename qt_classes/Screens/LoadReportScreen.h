@@ -1,7 +1,8 @@
+#define __USE_MINGW_ANSI_STDIO 0
 #ifndef LOADREPORTSCREEN_H
 #define LOADREPORTSCREEN_H
 
-#include "../Screen.h"
+#include "./../Screen.h"
 #include "GraphGraphicsScene.h"
 #include "./../../libraries/json.hpp"
 

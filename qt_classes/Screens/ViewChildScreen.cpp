@@ -81,7 +81,7 @@ void ViewChildScreen::back() {
 void ViewChildScreen::updateList() {
 	QStringList items;
 
-	ifstream child_file("./data/children.json", ifstream::binary);
+	ifstream child_file("./../data/children.json", ifstream::binary);
     json child_json(child_file);
 
     JSON = child_json;

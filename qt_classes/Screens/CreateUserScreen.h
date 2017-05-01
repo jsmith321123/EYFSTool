@@ -12,7 +12,7 @@
 #include <QComboBox>
 
 //headers
-#include "./Screen.h"
+#include "./../Screen.h"
 
 using namespace std;
 

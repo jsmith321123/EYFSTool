@@ -40,11 +40,9 @@ bool LoginScreen::login() {
 	QString user = userLineEdit.text();
 	QString password = passLineEdit.text();
 	
-	ifstream user_file("./data/users.json", ifstream::binary);
+	ifstream user_file("./../data/users.json");
 	json user_json(user_file);
 
-	cout << hash(password) << endl;
-	
 	for (json curr_user : user_json) {
 	 	if (curr_user["user"] == json(user.toStdString())
 		    && curr_user["hashed_password"] == json(hash(password))

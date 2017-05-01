@@ -1,7 +1,8 @@
+#define __USE_MINGW_ANSI_STDIO 0
 #ifndef CREATEREPORTSCREEN_H
 #define CREATEREPORTSCREEN_H
 
-#include "Screen.h"
+#include "./../Screen.h"
 
 //qt
 #include <QComboBox>
@@ -22,6 +23,8 @@ public:
 	void setIndividual();
 	void setGroup();
 	void setLearningArea();
+
+	void updateGroups();
 	
 	void createLAReport();
 

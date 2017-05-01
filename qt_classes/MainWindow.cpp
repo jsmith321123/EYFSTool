@@ -59,6 +59,7 @@ void NavigationBar::setCreateReport() {
 
 void NavigationBar::setNewAssessment() {
 	mw_->changeScreen(4);
+	mw_->screens[4]->updateList();
 }
 
 void NavigationBar::setLoadReport() {

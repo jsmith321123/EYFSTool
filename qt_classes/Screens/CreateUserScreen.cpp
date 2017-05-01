@@ -11,7 +11,7 @@
 
 #include <regex>
 
-#include "./MainWindow.h"
+//#include "./MainWindow.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -124,7 +124,7 @@ void CreateUserScreen::addUser() {
 	//adds the new user to the table as long
 	//as they dont already exist
 	if (succeded) {
-		ifstream user_file("./data/users.json", ifstream::binary);
+		ifstream user_file("./../data/users.json", ifstream::binary);
 		json user_json(user_file);
 		
 		string access = accessComboBox.currentText().toStdString();
@@ -137,7 +137,7 @@ void CreateUserScreen::addUser() {
 		
 		user_json.push_back(new_user);
 
-		ofstream output("./data/users.json");
+		ofstream output("./../data/users.json");
 
 		output << user_json.dump();
 
@@ -163,7 +163,7 @@ void CreateUserScreen::addUser() {
 }
 
 bool CreateUserScreen::userExists(QString user_name) {
-	ifstream user_file("./data/users.json", ifstream::binary);
+	ifstream user_file("./../data/users.json", ifstream::binary);
 	json user_json(user_file);
 	
 	for (json user : user_json) {

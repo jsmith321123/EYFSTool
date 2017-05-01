@@ -1,3 +1,4 @@
+#define __USE_MINGW_ANSI_STDIO 0
 #include "NewAssessmentScreen.h"
 #include <QStringList>
 
@@ -110,7 +111,7 @@ void NewAssessmentScreen::createSelectLayout() {
 void NewAssessmentScreen::updateList() {
     QStringList items;
 
-    ifstream child_file("./data/children.json", ifstream::binary);
+    ifstream child_file("./../data/children.json", ifstream::binary);
     json child_json(child_file);
 
     for (json child : child_json) {
@@ -123,6 +124,7 @@ void NewAssessmentScreen::updateList() {
             items << QString::fromStdString(surname + ", " + forename);
         }
 
+        childSelection.clear();
         childSelection.insertItems(0, items);
 }
 
@@ -172,7 +174,7 @@ void NewAssessmentScreen::createAssessmentLayout() {
 void NewAssessmentScreen::getAreas() {
     QStringList areas;
 
-    ifstream details_file("./data/assessment_details.json", ifstream::binary);
+    ifstream details_file("./../data/assessment_details.json", ifstream::binary);
     json details_json(details_file);
 
     details_json_ = details_json;
@@ -409,7 +411,7 @@ void NewAssessmentScreen::saveAssessment() {
 
 void NewAssessmentScreen::loadAssessment() {
     //open the file and parse the json
-    ifstream oldAssFile("./data/assessments.json", ifstream::binary);
+    ifstream oldAssFile("./../data/assessments.json", ifstream::binary);
     oldAssJson = json::parse(oldAssFile);
     oldAssFile.close();
 
@@ -490,13 +492,13 @@ void NewAssessmentScreen::loadAssessment() {
 
 void NewAssessmentScreen::calculateGroupValues() {
     //load the group and group assessment files
-    ifstream groupsFile("./data/groups.json", ifstream::binary);
+    ifstream groupsFile("./../data/groups.json", ifstream::binary);
     json groupJson = json::parse(groupsFile);
 
-    ifstream groupAssessFile("./data/group_assessments.json", ifstream::binary);
+    ifstream groupAssessFile("./../data/group_assessments.json", ifstream::binary);
     json groupAssessJson = json::parse(groupAssessFile);
 
-    ifstream childInfoFile("./data/children.json", ifstream::binary);
+    ifstream childInfoFile("./../data/children.json", ifstream::binary);
     json childInfoJson = json::parse(childInfoFile);
  
     //find if the current child fits into

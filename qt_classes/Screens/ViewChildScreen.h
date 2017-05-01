@@ -1,7 +1,7 @@
 #ifndef VIEWCHILDSCREEN_H
 #define VIEWCHILDSCREEN_H
 
-#include "../Screen.h"
+#include "./../Screen.h"
 
 //qt
 #include <QTextEdit>

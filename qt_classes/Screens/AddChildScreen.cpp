@@ -97,7 +97,7 @@ void AddChildScreen::addChild () {
 	new_child["eypp"] = eypp;
 
 	//get the existing json
-	ifstream file("./data/children.json");
+	ifstream file("./../data/children.json");
 	json current = json(file);
 
 	//failure reasons
@@ -126,6 +126,6 @@ void AddChildScreen::addChild () {
 	}
 
 	//rewrite the file with the new json object	
-	ofstream output("./data/children.json");
+	ofstream output("./../data/children.json");
 	output << current.dump();
 }

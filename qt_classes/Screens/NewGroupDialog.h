@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "./../Screen.h"
+
 //qt
 #include <QDialog>
 #include <QLabel>
@@ -19,7 +21,7 @@ class NewGroupDialog : public QDialog {
 Q_OBJECT
 
 public:
-	NewGroupDialog();
+	NewGroupDialog(Screen *crs);
 
 public slots:
 	void createGroup();
@@ -51,6 +53,8 @@ private:
 	QVBoxLayout layout;
 
 	vector<int> ids;
+
+	Screen *crs_;
 };
 
 #endif //NEWASSESSMENTSCREEN_H

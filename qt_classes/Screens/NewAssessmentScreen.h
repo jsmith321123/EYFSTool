@@ -1,10 +1,11 @@
+#define __USE_MINGW_ANSI_STDIO 0
 #ifndef NEWASSESSMENTSCREEN_H
 #define NEWASSESSMENTSCREEN_H
 
 #include <iostream>
 
 //headers
-#include "../Screen.h"
+#include "./../Screen.h"
 
 #include "./../../libraries/json.hpp"
 
