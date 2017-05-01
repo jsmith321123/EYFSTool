@@ -109,23 +109,6 @@ void CreateReportScreen::setGroup() {
 	select.insertItems(0, groups);
 }
 
-void CreateReportScreen::updateGroups() {
-	//get the list of groups
-	ifstream grp("./../data/groups.json", ifstream::binary);
-	json grpJson = json::parse(grp);
-	grp.close();
-
-	QStringList groups;
-
-	for (json group : grpJson) {
-		string groupName = group["name"];
-
-		groups << QString::fromStdString(groupName);
-	}
-
-	select.insertItems(0, groups);
-}
-
 void CreateReportScreen::setLearningArea() {
 	submitButton.setText("submit");
 

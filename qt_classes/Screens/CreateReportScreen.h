@@ -23,8 +23,6 @@ public:
 	void setIndividual();
 	void setGroup();
 	void setLearningArea();
-
-	void updateGroups();
 	
 	void createLAReport();
 
