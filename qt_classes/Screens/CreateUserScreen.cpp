@@ -79,6 +79,7 @@ void CreateUserScreen::addUser() {
 	if (pass1LineEdit.text() == pass2LineEdit.text()) {
 		password = Hash(pass1LineEdit.text());
 	} else {
+		password = -1;
 		succeded = false;
 		reason = "passwords do not match.";
 	}
