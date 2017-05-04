@@ -398,7 +398,7 @@ void NewAssessmentScreen::saveAssessment() {
     calculateGroupValues();
 
     //save the json
-    ofstream output("./data/assessments.json");
+    ofstream output("./../data/assessments.json");
     output << oldAssJson.dump();
 
     layout.setCurrentIndex(0);
@@ -641,6 +641,6 @@ void NewAssessmentScreen::calculateGroupValues() {
         }
     }
 
-    ofstream groupOutput("./data/group_assessments.json");
+    ofstream groupOutput("./../data/group_assessments.json");
     groupOutput << groupAssessJson.dump();
 }

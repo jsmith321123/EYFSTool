@@ -25,6 +25,7 @@ public slots:
 	void setNewAssessment();
 	void setLoadReport();
 	void setEditUser();
+	void logOut();
 
 private:
 	void setScreen(int index);
@@ -36,6 +37,7 @@ private:
 	QPushButton *loadReportButton		= 	new QPushButton("Load report");
 	QPushButton *createUserButton		= 	new QPushButton("Create user");
 	QPushButton *editUserButton			=	new QPushButton("Edit user");
+	QPushButton *logOutButton			=	new QPushButton("Log out");
 
 	QVBoxLayout layout;
 
