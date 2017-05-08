@@ -114,6 +114,7 @@ void CreateUserScreen::addUser() {
 
 	//check if the password fits the requirements
 	regex newRegex = regex("^(?=.*[a-z])(?=.*\\d).+$");
+	
 	if (!(regex_match(pass1LineEdit.text().toStdString(), newRegex) && pass1LineEdit.text().length() > 7)) {
 		succeded = false;
 		reason = "password does not fit the requirements, must have 8 characters and at least 1 digit";

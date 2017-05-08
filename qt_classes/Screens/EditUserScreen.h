@@ -42,7 +42,6 @@ private:
 
 	QWidget selectWidget;
 
-
 	json selectedUser;
 	json usersJson;
 
@@ -70,6 +69,9 @@ private:
 	//main layout to allow switching between selection
 	//and editing
 	QStackedLayout layout;
+
+	//feedback to user from editLayout
+	QLabel editFeedback;
 
 	//store the user's id
 	int id;
