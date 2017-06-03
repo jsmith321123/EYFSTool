@@ -17,4 +17,10 @@ change g++ to g++-5 in "MakeFile"
 
 `make`
 
+`mkdir bin`
+
+`mv EYFSTool bin`
+
+`cd bin`
+
 `./EYFSTool`
